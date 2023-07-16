@@ -1,0 +1,67 @@
+plugins {
+    id 'java'
+    id 'checkstyle'
+    id 'jacoco'
+    id 'com.adarshr.test-logger' version '3.2.0'
+}
+
+group 'hexlet.code'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+compileJava {
+    options.release = 20
+}
+
+dependencies {
+    testImplementation(
+            'org.junit.jupiter:junit-jupiter-api:5.7.0',
+            'org.junit.jupiter:junit-jupiter-params:5.8.2',
+            'org.slf4j:slf4j-log4j12:2.0.0-alpha6',
+            'org.assertj:assertj-core:3.22.0',
+            'org.skyscreamer:jsonassert:1.5.0'
+    )
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.required = true
+    }
+}
+
+jacoco {
+    toolVersion = "0.8.8"
+}
+
+testlogger {
+    theme 'standard'
+    showExceptions true
+    showStackTraces true
+    showFullStackTraces false
+    showCauses true
+    slowThreshold 2000
+    showSummary true
+    showSimpleNames false
+    showPassed true
+    showSkipped true
+    showFailed true
+    showOnlySlow false
+    showStandardStreams false
+    showPassedStandardStreams true
+    showSkippedStandardStreams true
+    showFailedStandardStreams true
+    logLevel 'lifecycle'
+}
+
+test {
+    useJUnitPlatform()
+}
+
+checkstyle {
+    toolVersion '9.2.1'
+}
