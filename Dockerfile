@@ -5,8 +5,9 @@ WORKDIR /
 COPY / .
 
 RUN gradle --version
-CMD $GRADLE_HOME
-CMD $APP_HOME
+RUN echo $GRADLE_HOME
+RUN echo $APP_HOME
+RUN echo $JAVA_HOME
 
 RUN gradle installDist
 
