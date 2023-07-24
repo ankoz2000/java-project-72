@@ -1,8 +1,10 @@
 plugins {
     id 'java'
+    id('idea')
     id 'checkstyle'
     id 'jacoco'
     id 'application'
+    id('io.ebean') version '13.6.5'
     id 'com.adarshr.test-logger' version '3.2.0'
 }
 
@@ -35,6 +37,13 @@ dependencies {
     implementation 'io.javalin:javalin-rendering:5.5.0'
 
     implementation 'org.slf4j:slf4j-simple:2.0.7'
+
+    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.5'
+    implementation 'javax.activation:activation:1.1.1'
+
+    implementation 'io.ebean:ebean:13.6.5'
+    annotationProcessor 'io.ebean:querybean-generator:13.6.5'
+    implementation 'io.ebean:ebean-test:13.6.5'
 }
 
 jacocoTestReport {
@@ -70,6 +79,12 @@ testlogger {
 
 test {
     useJUnitPlatform()
+}
+
+task generateMigrations(type: JavaExec) {
+    classpath = sourceSets.main.runtimeClasspath
+
+    mainClass = 'hexlet.code.MigrationGenerator'
 }
 
 checkstyle {
