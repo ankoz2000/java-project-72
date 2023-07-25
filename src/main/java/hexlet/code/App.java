@@ -1,21 +1,22 @@
 package hexlet.code;
 
 import io.javalin.Javalin;
+import io.javalin.rendering.template.JavalinThymeleaf;
+
 import nz.net.ultraq.thymeleaf.layoutdialect.LayoutDialect;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
-import io.javalin.plugin.rendering.template.JavalinThymeleaf;
 
 public class App {
 
     public static Javalin getApp() {
         Javalin app = Javalin.create(config -> {
                     if (!isProduction()) {
-                        config.enableDevLogging();
+                        config.plugins.enableDevLogging();
                     }
-                    config.enableWebjars();
-                    JavalinThymeleaf.configure(getTemplateEngine());
+//                    config.enableWebjars();
+                    JavalinThymeleaf.init(getTemplateEngine());
                 })
                 .get("/", ctx -> ctx.result("Hello World"))
                 .start(8080);
