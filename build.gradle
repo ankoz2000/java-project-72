@@ -1,11 +1,10 @@
 plugins {
-    id 'java'
-    id('idea')
-    id 'checkstyle'
-    id 'jacoco'
     id 'application'
-    id('io.ebean') version '13.6.5'
-    id 'com.adarshr.test-logger' version '3.2.0'
+    id 'checkstyle'
+    id 'com.adarshr.test-logger' version '3.0.0'
+    id 'com.github.ben-manes.versions' version '0.39.0'
+    id 'io.ebean' version '12.11.5'
+    id 'jacoco'
 }
 
 group 'hexlet.code'
@@ -24,27 +23,8 @@ compileJava {
 }
 
 dependencies {
-    implementation 'io.javalin:javalin:2.0.0'
-    implementation 'io.javalin:javalin-rendering:5.5.0'
-
-    testImplementation(
-            'org.junit.jupiter:junit-jupiter-api:5.7.0',
-            'org.junit.jupiter:junit-jupiter-params:5.8.2',
-            'org.slf4j:slf4j-log4j12:2.0.0-alpha6',
-            'org.assertj:assertj-core:3.22.0',
-            'org.skyscreamer:jsonassert:1.5.0'
-    )
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
-
-
-    implementation 'org.slf4j:slf4j-simple:2.0.7'
-
-    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.5'
-    implementation 'javax.activation:activation:1.1.1'
-
-    implementation 'io.ebean:ebean:13.6.5'
-    annotationProcessor 'io.ebean:querybean-generator:13.6.5'
-    implementation 'io.ebean:ebean-test:13.6.5'
+    implementation 'io.javalin:javalin:4.0.1'
+    implementation 'org.slf4j:slf4j-simple:1.7.31'
 
     implementation 'org.thymeleaf:thymeleaf:3.0.12.RELEASE'
     implementation 'nz.net.ultraq.thymeleaf:thymeleaf-layout-dialect:3.0.0'
@@ -53,6 +33,22 @@ dependencies {
 
     implementation 'com.h2database:h2:1.4.200'
     implementation 'org.postgresql:postgresql:42.2.24'
+
+    implementation 'io.ebean:ebean:12.11.5'
+    implementation 'io.ebean:ebean-ddl-generator:12.11.5'
+    implementation 'io.ebean:ebean-querybean:12.11.5'
+    implementation 'io.ebean:ebean-migration:12.11.2'
+    implementation 'io.ebean:ebean-annotation:7.3'
+    annotationProcessor 'io.ebean:querybean-generator:12.11.5'
+
+    implementation 'org.glassfish.jaxb:jaxb-runtime:2.3.5'
+    implementation 'javax.activation:activation:1.1.1'
+
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    testImplementation 'org.junit.jupiter:junit-jupiter-params:5.8.1'
+    testImplementation 'org.assertj:assertj-core:3.21.0'
+    testImplementation 'io.ebean:ebean-test:12.11.5'
+    testImplementation 'com.konghq:unirest-java:3.13.0'
 }
 
 jacocoTestReport {
@@ -78,8 +74,7 @@ testlogger {
     showPassed true
     showSkipped true
     showFailed true
-    showOnlySlow false
-    showStandardStreams false
+    showStandardStreams true
     showPassedStandardStreams true
     showSkippedStandardStreams true
     showFailedStandardStreams true
