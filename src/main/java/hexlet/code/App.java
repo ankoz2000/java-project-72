@@ -1,5 +1,6 @@
 package hexlet.code;
 
+import hexlet.code.controllers.MainController;
 import io.javalin.Javalin;
 import io.javalin.rendering.template.JavalinThymeleaf;
 
@@ -15,11 +16,14 @@ public class App {
                     if (!isProduction()) {
                         config.plugins.enableDevLogging();
                     }
-//                    config.enableWebjars();
                     JavalinThymeleaf.init(getTemplateEngine());
                 })
                 .get("/", ctx -> ctx.result("Hello World"))
                 .start(8080);
+        addRoutes(app);
+        app.before(ctx -> {
+            ctx.attribute("ctx", ctx);
+        });
         return app;
     }
 
@@ -52,5 +56,9 @@ public class App {
     private static int getPort() {
         String port = System.getenv().getOrDefault("PORT", "3000");
         return Integer.valueOf(port);
+    }
+
+    private static void addRoutes(Javalin app) {
+        app.get("/", MainController.welcome);
     }
 }
