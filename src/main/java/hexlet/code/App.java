@@ -22,9 +22,8 @@ public class App {
                     }
 
                     JavalinThymeleaf.init(getTemplateEngine());
-                })
+                });
 //                .get("/", ctx -> ctx.result("Hello World"))
-                .start(8080);
         addRoutes(app);
         app.before(ctx -> {
             ctx.attribute("ctx", ctx);
@@ -47,7 +46,7 @@ public class App {
 
     public static void main(String[] args) {
         Javalin app = getApp();
-        app.start();
+        app.start(getPort());
     }
 
     private static String getMode() {
