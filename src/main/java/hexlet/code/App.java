@@ -18,7 +18,7 @@ public class App {
                     }
                     JavalinThymeleaf.init(getTemplateEngine());
                 })
-                .get("/", ctx -> ctx.result("Hello World"))
+//                .get("/", ctx -> ctx.result("Hello World"))
                 .start(8080);
         addRoutes(app);
         app.before(ctx -> {
