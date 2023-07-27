@@ -35,16 +35,18 @@ public class UrlController {
             ctx.render("index.html");
             return;
         }
-        Url urlEntity = new Url(url.toString());
+        Url urlEntity = new Url(url.getProtocol() + url.getHost() + url.getPort());
         boolean exists = new QUrl()
                 .name.equalTo(url.toString())
                 .exists();
-        if (exists) {
+        if (!exists) {
             ctx.sessionAttribute("flash", "Страница уже существует");
             ctx.sessionAttribute("flash-type", "danger");
             ctx.attribute("url", receivedUrl);
             ctx.render("urls/index.html");
         }
+
+        log.log(System.Logger.Level.INFO, "Add url: " + url.getProtocol() + url.getHost() + url.getPort());
 
         urlEntity.save();
 
