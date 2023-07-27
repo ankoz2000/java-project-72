@@ -6,7 +6,7 @@ import io.ebean.annotation.WhenCreated;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import java.util.Date;
+import java.time.Instant;
 
 @Entity
 public class Url extends Model {
@@ -17,7 +17,7 @@ public class Url extends Model {
     private String name;
 
     @WhenCreated
-    private Date createdAt;
+    private Instant createdAt;
 
     public Url(String name) {
         this.name = name;
@@ -42,11 +42,11 @@ public class Url extends Model {
         this.name = name;
     }
 
-    public Date getCreatedAt() {
+    public Instant getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Date createdAt) {
+    public void setCreatedAt(Instant createdAt) {
         this.createdAt = createdAt;
     }
 }
