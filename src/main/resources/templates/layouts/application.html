@@ -21,18 +21,18 @@
         <a class="nav-link" href="/urls">Страницы</a>
       </div>
     </div>
-    <section>
-      <form action="/urls" method="post">
-        <div class="input-group">
-          <input type="search" class="form-control rounded" name="url" th:value="${url}" placeholder="Искать по URL" />
-          <button type="submit" class="btn btn-outline-primary">Найти</button>
-        </div>
-      </form>
-    </section>
   </div>
 </nav>
 
 <main class="flex-grow-1">
+  <section>
+    <form action="/urls" method="post">
+      <div class="input-group">
+        <input type="search" class="form-control rounded" name="url" th:value="${url}" placeholder="Искать по URL" />
+        <button type="submit" class="btn btn-outline-primary">Найти</button>
+      </div>
+    </form>
+  </section>
   <div th:if="${session.flash}"
        th:class="'rounded-0 m-0 alert alert-dismissible fade show alert-' + ${ctx.consumeSessionAttribute('flash-type')}"
        role="alert">
