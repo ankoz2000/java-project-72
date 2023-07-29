@@ -40,7 +40,7 @@ public class UrlController {
         boolean exists = new QUrl()
                 .name.equalTo(url.toString())
                 .exists();
-        if (!exists) {
+        if (exists) {
             ctx.sessionAttribute("flash", "Страница уже существует");
             ctx.sessionAttribute("flash-type", "danger");
             ctx.attribute("url", receivedUrl);
