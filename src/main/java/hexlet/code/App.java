@@ -10,20 +10,20 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
-import static io.javalin.apibuilder.ApiBuilder.*;
+import static io.javalin.apibuilder.ApiBuilder.post;
+import static io.javalin.apibuilder.ApiBuilder.get;
 import static io.javalin.apibuilder.ApiBuilder.path;
 
 public class App {
 
     public static Javalin getApp() {
         Javalin app = Javalin.create(config -> {
-                    if (!isProduction()) {
-                        config.plugins.enableDevLogging();
-                    }
+            if (!isProduction()) {
+                config.plugins.enableDevLogging();
+            }
 
-                    JavalinThymeleaf.init(getTemplateEngine());
-                });
-//                .get("/", ctx -> ctx.result("Hello World"))
+            JavalinThymeleaf.init(getTemplateEngine());
+        });
         addRoutes(app);
         app.before(ctx -> {
             ctx.attribute("ctx", ctx);
