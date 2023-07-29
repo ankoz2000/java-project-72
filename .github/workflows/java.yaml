@@ -23,6 +23,7 @@ jobs:
         with:
           arguments: build
           build-root-directory: app
+          gradle-version: 8.2
       - name: Publish code coverage
         uses: paambaati/codeclimate-action@v3.0.0
         if: ${{ github.event_name == 'push' }}
