@@ -18,11 +18,12 @@ import static io.avaje.classpath.scanner.internal.ScanLog.log;
 public class UrlController {
 
     public static Handler addUrl = ctx -> {
-        String receivedUrl = ctx.formParam("url");
+        String receivedUrl = ctx.formParam("name");
 
         java.net.URL url;
+        log.log(System.Logger.Level.INFO, "Received url: " + receivedUrl);
         try {
-            if (receivedUrl.isEmpty()) {
+            if (receivedUrl == null || receivedUrl.isEmpty()) {
                 throw new MalformedURLException();
             }
             url = new java.net.URL(receivedUrl);
