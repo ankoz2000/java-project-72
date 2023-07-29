@@ -13,7 +13,7 @@ import java.time.temporal.ChronoField;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class AppTest {
+public final class AppTest {
 
     @Test
     void testInit() {
