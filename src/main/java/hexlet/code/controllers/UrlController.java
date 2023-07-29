@@ -36,7 +36,8 @@ public class UrlController {
             ctx.render("index.html");
             return;
         }
-        Url urlEntity = new Url(url.getProtocol() + "://" + url.getHost() + ":" + url.getPort());
+        String port = url.getPort() != -1 ? ":" + url.getPort() : "";
+        Url urlEntity = new Url(url.getProtocol() + "://" + url.getHost() + port);
         boolean exists = new QUrl()
                 .name.equalTo(url.toString())
                 .exists();
@@ -47,7 +48,7 @@ public class UrlController {
             ctx.render("urls/index.html");
         }
 
-        log.log(System.Logger.Level.INFO, "Add url: " + url.getProtocol() + "://" + url.getHost() + ":" + url.getPort());
+        log.log(System.Logger.Level.INFO, "Add url: " + url.getProtocol() + "://" + url.getHost() + port);
 
         urlEntity.save();
 
