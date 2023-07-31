@@ -6,7 +6,11 @@ import io.ebean.Database;
 import io.javalin.Javalin;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
-import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Nested;
 
 import java.time.Instant;
 import java.time.temporal.ChronoField;
@@ -28,7 +32,7 @@ public final class AppTest {
     @BeforeAll
     public static void beforeAll() {
         app = App.getApp();
-        app.start(0);
+        app.start();
         int port = app.port();
         baseUrl = "http://localhost:" + port;
         database = DB.getDefault();
@@ -52,14 +56,7 @@ public final class AppTest {
         void testIndex() {
             HttpResponse<String> response = Unirest.get(baseUrl).asString();
             assertThat(response.getStatus()).isEqualTo(200);
-            assertThat(response.getBody()).contains("Привет от Хекслета!");
-        }
-
-        @Test
-        void testAbout() {
-            HttpResponse<String> response = Unirest.get(baseUrl + "/about").asString();
-            assertThat(response.getStatus()).isEqualTo(200);
-            assertThat(response.getBody()).contains("Эксперименты с Javalin на Хекслете");
+            assertThat(response.getBody()).contains("A. Kozlov");
         }
     }
 

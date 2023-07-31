@@ -54,7 +54,7 @@ public class UrlController {
 
         ctx.sessionAttribute("flash", "Страница успешно добавлена");
         ctx.sessionAttribute("flash-type", "success");
-        ctx.redirect("/");
+        ctx.redirect("/urls");
     };
 
     public static Handler listUrls = ctx -> {
