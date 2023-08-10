@@ -22,4 +22,4 @@ RUN gradle installDist
 
 RUN ls -la
 
-CMD ./build/install/app/bin/app
+CMD ./app/build/install/app/bin/app
