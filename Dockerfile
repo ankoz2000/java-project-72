@@ -20,6 +20,7 @@ COPY / .
 
 RUN gradle installDist
 
-RUN ls -d -l . app build
+RUN ls -d -l . app/app
+RUN ls -d -l . app/build
 
 CMD ./app/build/install/app/bin/app
