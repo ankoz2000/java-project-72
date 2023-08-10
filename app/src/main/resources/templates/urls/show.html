@@ -18,6 +18,16 @@
       <td th:text="${#temporals.format(url.getCreatedAt(), 'dd/MM/yyyy HH:mm')}"></td>
     </div>
   </div>
+  <form action="/urls/{id}(id=*{getId()})/checks" method="get">
+    <button type="submit" class="btn btn-outline-primary">Check</button>
+  </form>
 </section>
-
+<section layout:fragment="content">
+  <div class="card" th:each="urlCheck : ${urlChecks}" th:object="${urlCheck}">
+    <div class="card-body bg-light">
+      <div th:text="*{getId()}"></div>
+      <div th:text="${#temporals.format(urlCheck.getCreatedAt(), 'dd/MM/yyyy HH:mm')}"></div>
+    </div>
+  </div>
+</section>
 </html>

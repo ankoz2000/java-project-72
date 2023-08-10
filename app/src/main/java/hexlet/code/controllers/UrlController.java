@@ -2,6 +2,7 @@ package hexlet.code.controllers;
 
 import groovy.util.logging.Slf4j;
 import hexlet.code.model.Url;
+import hexlet.code.model.UrlCheck;
 import hexlet.code.model.query.QUrl;
 import io.ebean.PagedList;
 import io.javalin.http.Handler;
@@ -105,6 +106,28 @@ public class UrlController {
         }
 
         ctx.attribute("url", url);
+        ctx.attribute("urlChecks", url.getUrlCheck());
+        ctx.render("urls/show.html");
+    };
+
+    public static Handler checkUrl = ctx -> {
+        int id = ctx.pathParamAsClass("id", Integer.class).getOrDefault(null);
+
+        Url url = new QUrl()
+                .id.equalTo(id)
+                .findOne();
+
+        if (url == null) {
+            throw new NotFoundResponse();
+        }
+
+        UrlCheck urlCheck = new UrlCheck("new check");
+        urlCheck.setUrl(url);
+
+        urlCheck.save();
+
+        ctx.attribute("url", url);
+        ctx.attribute("urlCheck", urlCheck);
         ctx.render("urls/show.html");
     };
 }

@@ -6,12 +6,16 @@ import io.ebean.Database;
 import io.javalin.Javalin;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
+import okhttp3.HttpUrl;
+import okhttp3.mockwebserver.MockResponse;
+import okhttp3.mockwebserver.MockWebServer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Nested;
 
+import java.io.IOException;
 import java.time.Instant;
 import java.time.temporal.ChronoField;
 
@@ -28,6 +32,7 @@ public final class AppTest {
     private static String baseUrl;
     private static Url existingUrl;
     private static Database database;
+    private static MockWebServer server;
 
     @BeforeAll
     public static void beforeAll() {
@@ -36,11 +41,21 @@ public final class AppTest {
         int port = app.port();
         baseUrl = "http://localhost:" + port;
         database = DB.getDefault();
+
+        server = new MockWebServer();
+
+        MockResponse response = new MockResponse()
+                .addHeader("Content-Type", "application/json; charset=utf-8")
+                .addHeader("Cache-Control", "no-cache")
+                .setBody("{test: true}");
+
+        server.enqueue(response);
     }
 
     @AfterAll
-    public static void afterAll() {
+    public static void afterAll() throws IOException {
         app.stop();
+        server.close();
     }
 
     @BeforeEach
@@ -138,6 +153,34 @@ public final class AppTest {
 //                    .isEqualTo(today.get(ChronoField.DAY_OF_MONTH));
 //            assertThat(createdAt.get(ChronoField.HOUR_OF_DAY))
 //                    .isEqualTo(today.get(ChronoField.HOUR_OF_DAY));
+        }
+
+        @Test
+        void testUrlCheck() {
+            String inputUrlName = "https://vk.com";
+            HttpResponse responsePost = Unirest
+                    .post(baseUrl + "/urls")
+                    .field("name", inputUrlName)
+                    .asEmpty();
+
+            Url actualUrl = new QUrl()
+                    .name.equalTo(inputUrlName)
+                    .findOne();
+
+            HttpResponse responsePost2 = Unirest
+                    .post(baseUrl + "/urls" + actualUrl.getId() + "/checks")
+                    .asEmpty();
+
+            assertThat(responsePost2.getStatus()).isEqualTo(200);
+
+            HttpUrl testUrl = server.url("/v1/chat/");
+
+            HttpResponse responsePost3 = Unirest
+                    .get(testUrl.url().toString())
+                    .asEmpty();
+
+            assertThat(responsePost3.getBody()).isEqualTo("{test: true}");
+
         }
     }
 }
