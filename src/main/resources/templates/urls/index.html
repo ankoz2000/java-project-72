@@ -32,8 +32,8 @@
                 <a th:href="@{/urls/{id}(id=*{getId()})}" th:text="${#strings.abbreviate(url.getName(), 30)}"></a>
             </td>
             <td th:text="${#temporals.format(url.getCreatedAt(), 'dd/MM/yyyy HH:mm')}"></td>
-            <td th:text="${#temporals.format(url.getUrlCheck().get(0).getCreatedAt(), 'dd/MM/yyyy HH:mm')}"></td>
-            <td th:text="*{url.getUrlCheck().get(0).getStatus()}"></td>
+            <td th:text="${#temporals.format(url.getUrlCheck().getCreatedAt(), 'dd/MM/yyyy HH:mm')}"></td>
+            <td th:text="*{url.getUrlCheck().getStatus()}"></td>
         </tr>
         </tbody>
     </table>
