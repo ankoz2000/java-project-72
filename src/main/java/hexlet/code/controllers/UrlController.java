@@ -80,7 +80,7 @@ public class UrlController {
                 .boxed()
                 .collect(Collectors.toList());
 
-        log.log(System.Logger.Level.INFO, urls);
+        log.log(System.Logger.Level.INFO, urls.get(0).getUrlCheck());
 
         ctx.attribute("urls", urls);
         ctx.attribute("term", term);
