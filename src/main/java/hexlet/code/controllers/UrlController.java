@@ -71,7 +71,7 @@ public class UrlController {
                 .id.asc()
                 .findPagedList();
 
-        List<Url> articles = pagedUrls.getList();
+        List<Url> urls = pagedUrls.getList();
 
         int lastPage = pagedUrls.getTotalPageCount() + 1;
         int currentPage = pagedUrls.getPageIndex() + 1;
@@ -80,7 +80,9 @@ public class UrlController {
                 .boxed()
                 .collect(Collectors.toList());
 
-        ctx.attribute("urls", articles);
+        log.log(System.Logger.Level.INFO, urls);
+
+        ctx.attribute("urls", urls);
         ctx.attribute("term", term);
         ctx.attribute("pages", pages);
         ctx.attribute("currentPage", currentPage);
