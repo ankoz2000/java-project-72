@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.FetchType;
 import java.time.Instant;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public final class Url extends Model {
     @WhenCreated
     private Instant createdAt;
 
-    @OneToMany(mappedBy="url")
+    @OneToMany(mappedBy="url", fetch = FetchType.EAGER)
     private List<UrlCheck> urlCheck;
 
     public Url(String name) {
