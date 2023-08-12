@@ -32,7 +32,9 @@
   <form th:action="@{/urls/{id}(id=${url.getId()})/checks}" method="post">
     <button type="submit" class="btn btn-outline-primary">Run check</button>
   </form>
-  <div class="card" th:each="urlCheck : ${urlChecks}" th:object="${urlCheck}">
+</section>
+<section layout:fragment="content" th:object="${urlCheck}">
+  <div class="card" th:each="urlCheck : ${urlChecks}">
     <div class="card-body bg-light">
       <div th:text="*{getId()}"></div>
       <div th:text="${#temporals.format(urlCheck.getCreatedAt(), 'dd/MM/yyyy HH:mm')}"></div>
