@@ -117,6 +117,8 @@ public class UrlController {
             throw new NotFoundResponse();
         }
 
+        log.log(System.Logger.Level.INFO, "Show url with id = " + url.getId() + " and name: " + url.getName());
+
         ctx.attribute("url", url);
         ctx.attribute("urlChecks", url.getUrlChecks());
         ctx.render("urls/show.html");
