@@ -29,19 +29,15 @@
 </section>
 <section layout:fragment="content" th:object="${url}">
   <h3>Проверки</h3>
-  <form th:action="@{/urls/{id}(id=${url.getId()})/checks}" method="post">
+  <form th:action="@{/urls/{id}(id=*{getId()})/checks}" method="post">
     <button type="submit" class="btn btn-outline-primary">Run check</button>
   </form>
-</section>
-<section layout:fragment="content" th:object="${urlCheck}">
-  <div class="card" th:each="urlCheck : ${urlChecks}">
+  <div class="card" th:each="urlCheck : ${urlChecks}" th:object="${urlCheck}">
     <div class="card-body bg-light">
       <div th:text="*{getId()}"></div>
       <div th:text="${#temporals.format(urlCheck.getCreatedAt(), 'dd/MM/yyyy HH:mm')}"></div>
     </div>
   </div>
-</section>
-<section layout:fragment="content" th:object="${urlCheck}">
   <table class="table table-striped mt-5">
     <thead>
     <tr>
@@ -54,7 +50,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr th:each="urlCheck : ${urlChecks}">
+    <tr th:each="urlCheck : ${urlChecks}" th:object="${urlCheck}">
       <td th:text="*{getId()}"></td>
       <td th:text="*{getStatus()}"></td>
       <td th:text="*{getTitle()}"></td>
