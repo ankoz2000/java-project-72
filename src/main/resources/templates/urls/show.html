@@ -27,9 +27,9 @@
     </table>
   </div>
 </section>
-<section layout:fragment="content" th:object="${url}">
+<section layout:fragment="content">
   <h3>Проверки</h3>
-  <form th:action="@{/urls/{id}(id=*{getId()})/checks}" method="post">
+  <form th:action="@{/urls/{id}(id=${url.getId()})/checks}" th:object="${url}" method="post">
     <button type="submit" class="btn btn-outline-primary">Run check</button>
   </form>
   <div class="card" th:each="urlCheck : ${urlChecks}" th:object="${urlCheck}">
