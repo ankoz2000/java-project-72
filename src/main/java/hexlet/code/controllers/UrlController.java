@@ -139,7 +139,7 @@ public class UrlController {
                 .post(url.getName())
                 .asEmpty();
 
-        Document doc = Jsoup.parse(responseGet.body().toString());
+        Document doc = Jsoup.parse(responseGet.getBody().toString());
 
         UrlCheck urlCheck = new UrlCheck(url);
 
