@@ -29,7 +29,7 @@
 </section>
 <section layout:fragment="content">
   <h3>Проверки</h3>
-  <form th:action="@{/urls/(url.getId())/checks}" th:object="${url}" method="post">
+  <form th:action="@{/urls/{id}(id=*{getId()})/checks}" th:object="${url}" method="get">
     <button type="submit" class="btn btn-outline-primary">Run check</button>
   </form>
   <div class="card" th:each="urlCheck : ${urlChecks}" th:object="${urlCheck}">
