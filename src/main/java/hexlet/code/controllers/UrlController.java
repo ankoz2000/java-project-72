@@ -81,7 +81,8 @@ public class UrlController {
                 .collect(Collectors.toList());
 
         if (!urls.isEmpty()) {
-            log.log(System.Logger.Level.INFO, urls.get(0).getUrlCheck());
+            log.log(System.Logger.Level.INFO, "Urls checks object: " + urls.get(0).getUrlChecks());
+            log.log(System.Logger.Level.INFO, "Urls check size: " + urls.get(0).getUrlChecks().size());
         }
 
         ctx.attribute("urls", urls);
@@ -110,12 +111,14 @@ public class UrlController {
         }
 
         ctx.attribute("url", url);
-        ctx.attribute("urlChecks", url.getUrlCheck());
+        ctx.attribute("urlChecks", url.getUrlChecks());
         ctx.render("urls/show.html");
     };
 
     public static Handler checkUrl = ctx -> {
         int id = ctx.pathParamAsClass("id", Integer.class).getOrDefault(null);
+
+        log.log(System.Logger.Level.INFO, "Add url check for url with id = " + id);
 
         Url url = new QUrl()
                 .id.equalTo(id)
