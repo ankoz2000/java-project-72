@@ -3,10 +3,6 @@
       layout:decorate="~{layouts/application.html}">
 
 <section layout:fragment="header">
-  Просмотр страницы
-</section>
-
-<section layout:fragment="content">
   <div class="container-lg mt-5" th:object="${url}">
     <h1 th:text="'Сайт ' + *{getName()}"></h1>
     <table class="table table-bordered table-hover mt-3">
@@ -26,6 +22,9 @@
       </tbody>
     </table>
   </div>
+</section>
+
+<section layout:fragment="content">
   <h3>Проверки</h3>
   <form th:action="@{/urls/{id}(id=*{getId()})/checks}" th:object="${url}" method="get">
     <button type="submit" class="btn btn-outline-primary">Run check</button>
