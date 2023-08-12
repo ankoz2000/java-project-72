@@ -135,6 +135,8 @@ public class UrlController {
 
         ctx.attribute("url", url);
         ctx.attribute("urlCheck", urlCheck);
+        ctx.sessionAttribute("flash", "Страница успешно проверена");
+        ctx.sessionAttribute("flash-type", "success");
         ctx.render("urls/show.html");
     };
 }
