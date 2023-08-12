@@ -9,6 +9,11 @@ import io.javalin.http.Handler;
 
 import java.net.MalformedURLException;
 import io.javalin.http.NotFoundResponse;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+
+import java.net.http.HttpResponse;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -128,8 +133,31 @@ public class UrlController {
             throw new NotFoundResponse();
         }
 
-        UrlCheck urlCheck = new UrlCheck("new check");
-        urlCheck.setUrl(url);
+        HttpResponse responseGet = Unirest
+                .post(url.getName())
+                .asEmpty();
+
+        Document doc = Jsoup.parse(responseGet.body().toString());
+
+        UrlCheck urlCheck = new UrlCheck(url);
+
+        if (!doc.title().isEmpty()) {
+            log.log(System.Logger.Level.INFO, "Title is: " + doc.title());
+            urlCheck.setTitle(doc.title());
+        }
+
+        if (doc.selectFirst("h1") != null) {
+            log.log(System.Logger.Level.INFO, "H1 is: " + doc.selectFirst("h1").text());
+            urlCheck.setH1(doc.selectFirst("h1").text());
+        }
+
+        Element metaElement = doc.selectFirst("meta[name=content]");
+
+        if (metaElement != null) {
+            log.log(System.Logger.Level.INFO, "Meta is: " + metaElement);
+            log.log(System.Logger.Level.INFO, "Meta content is: " + metaElement.attributes().get("content"));
+            urlCheck.setDescription(metaElement.attributes().get("content"));
+        }
 
         urlCheck.save();
 
