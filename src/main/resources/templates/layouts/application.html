@@ -28,7 +28,7 @@
   <section>
     <form action="/urls" method="post">
       <div class="input-group">
-        <input type="search" class="form-control rounded" name="url" th:value="${url}" placeholder="Искать по URL" />
+        <input type="search" class="form-control rounded" name="url" th:value="${url.getName()}" placeholder="Искать по URL" />
         <button type="submit" class="btn btn-outline-primary">Найти</button>
       </div>
     </form>

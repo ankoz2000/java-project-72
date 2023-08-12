@@ -9,7 +9,10 @@
 <section layout:fragment="content" th:object="${url}">
   <div class="card">
     <div class="card-header bg-secondary text-white">
-      <h2 th:text="*{getName()}"></h2>
+      <h2 th:text="*{'Сайт ' + getName()}"></h2>
+    </div>
+    <div class="card-body bg-light">
+      <p class="lead" th:text="*{getId()}"></p>
     </div>
     <div class="card-body bg-light">
       <p class="lead" th:text="*{getName()}"></p>
@@ -18,16 +21,39 @@
       <td th:text="${#temporals.format(url.getCreatedAt(), 'dd/MM/yyyy HH:mm')}"></td>
     </div>
   </div>
-  <form action="/urls/{id}(id=*{getId()})/checks" method="get">
-    <button type="submit" class="btn btn-outline-primary">Check</button>
-  </form>
 </section>
 <section layout:fragment="content">
+  <h2>Checks</h2>
+  <form action="/urls/{id}(id=*{getId()})/checks" method="get">
+    <button type="submit" class="btn btn-outline-primary">Run check</button>
+  </form>
   <div class="card" th:each="urlCheck : ${urlChecks}" th:object="${urlCheck}">
     <div class="card-body bg-light">
       <div th:text="*{getId()}"></div>
       <div th:text="${#temporals.format(urlCheck.getCreatedAt(), 'dd/MM/yyyy HH:mm')}"></div>
     </div>
   </div>
+  <table class="table table-striped mt-5">
+    <thead>
+    <tr>
+      <th class="col-1">ID</th>
+      <th class="col-3">Код ответа</th>
+      <th class="col-2">title</th>
+      <th class="col-2">h1</th>
+      <th class="col-2">description</th>
+      <th class="col-2">Дата проверки</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="urlCheck : ${urlChecks}" th:object="${urlCheck}">
+      <td th:text="*{getId()}"></td>
+      <td th:text="*{getStatus()}"></td>
+      <td th:text="*{getTitle()}"></td>
+      <td th:text="*{getH1()}"></td>
+      <td th:text="*{getDescription()}"></td>
+      <td th:text="${#temporals.format(urlCheck.getCreatedAt(), 'dd/MM/yyyy HH:mm')}"></td>
+    </tr>
+    </tbody>
+  </table>
 </section>
 </html>
