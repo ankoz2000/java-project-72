@@ -13,9 +13,6 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 
-import kong.unirest.HttpResponse;
-import kong.unirest.Unirest;
-
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -135,11 +132,7 @@ public class UrlController {
             throw new NotFoundResponse();
         }
 
-        HttpResponse responseGet = Unirest
-                .post(url.getName())
-                .asEmpty();
-
-        Document doc = Jsoup.parse(responseGet.body().toString());
+        Document doc = Jsoup.connect(url.getName()).get();
 
         UrlCheck urlCheck = new UrlCheck(url);
 
