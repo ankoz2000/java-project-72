@@ -73,7 +73,9 @@ public class App {
                 path("{id}", () -> {
                     get(UrlController.showUrl);
                 });
-                post("{id}/checks", UrlController.checkUrl);
+                path("{id}/checks",() -> {
+                    get(UrlController.checkUrl);
+                });
             });
         });
     }
