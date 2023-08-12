@@ -8,27 +8,24 @@
 
 <section layout:fragment="content">
   <div class="container-lg mt-5" th:object="${url}">
-    <h1>Сайт</h1>
-      <h1 th:text="'Сайт ' + *{getName()}"></h1>
-      <table class="table table-bordered table-hover mt-3">
-        <tbody>
-        <tr>
-          <td>ID</td>
-          <td th:text="*{getId()}"></td>
-        </tr>
-        <tr>
-          <td>Имя</td>
-          <td th:text="*{getName()}"></td>
-        </tr>
-        <tr>
-          <td>Дата создания</td>
-          <td th:text="${#temporals.format(url.getCreatedAt(), 'dd/MM/yyyy HH:mm')}"></td>
-        </tr>
-        </tbody>
-      </table>
+    <h1 th:text="'Сайт ' + *{getName()}"></h1>
+    <table class="table table-bordered table-hover mt-3">
+      <tbody>
+      <tr>
+        <td>ID</td>
+        <td th:text="*{getId()}"></td>
+      </tr>
+      <tr>
+        <td>Имя</td>
+        <td th:text="*{getName()}"></td>
+      </tr>
+      <tr>
+        <td>Дата создания</td>
+        <td th:text="${#temporals.format(url.getCreatedAt(), 'dd/MM/yyyy HH:mm')}"></td>
+      </tr>
+      </tbody>
+    </table>
   </div>
-</section>
-<section layout:fragment="content">
   <h3>Проверки</h3>
   <form th:action="@{/urls/{id}(id=*{getId()})/checks}" th:object="${url}" method="get">
     <button type="submit" class="btn btn-outline-primary">Run check</button>
