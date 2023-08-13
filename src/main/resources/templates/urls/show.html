@@ -42,11 +42,11 @@
     </thead>
     <tbody>
       <tr th:each="urlCheck : ${urlChecks}" th:object="${urlCheck}">
-        <td th:text="*{getId()}"></td>
-        <td th:text="*{getStatus()}"></td>
-        <td th:text="*{getTitle()}"></td>
-        <td th:text="*{getH1()}"></td>
-        <td th:text="*{getDescription()}"></td>
+        <td th:text="${urlCheck.getId()}"></td>
+        <td th:text="${urlCheck.getStatus()}"></td>
+        <td th:text="${urlCheck.getTitle()}"></td>
+        <td th:text="${urlCheck.getH1()}"></td>
+        <td th:text="${urlCheck.getDescription()}"></td>
         <td th:text="${#temporals.format(urlCheck.getCreatedAt(), 'dd/MM/yyyy HH:mm')}"></td>
       </tr>
     </tbody>
