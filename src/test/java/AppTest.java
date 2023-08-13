@@ -166,7 +166,7 @@ public final class AppTest {
                     .findOne();
 
             HttpResponse responsePost2 = Unirest
-                    .post(baseUrl + "/urls" + actualUrl.getId() + "/checks")
+                    .post(baseUrl + "/urls/" + actualUrl.getId() + "/checks")
                     .asEmpty();
 
             assertThat(responsePost2.getStatus()).isEqualTo(200);
