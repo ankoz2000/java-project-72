@@ -2,7 +2,7 @@
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/application.html}">
 
-<section layout:fragment="header">
+<section layout:fragment="header" th:object="${url}">
   <h1 th:text="'Сайт ' + *{getName()}"></h1>
 </section>
 
