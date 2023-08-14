@@ -43,7 +43,7 @@
     <tbody>
       <tr th:each="urlCheck : ${urlChecks}" th:object="${urlCheck}">
         <td th:text="${urlCheck.getId()}"></td>
-        <td th:text="${urlCheck.getStatus()}"></td>
+        <td th:text="${urlCheck.getStatusCode()}"></td>
         <td th:text="${urlCheck.getTitle()}"></td>
         <td th:text="${urlCheck.getH1()}"></td>
         <td th:text="${urlCheck.getDescription()}"></td>

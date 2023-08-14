@@ -37,7 +37,7 @@
                       th:text="${#temporals.format(url.getUrlChecks().get(0).getCreatedAt(), 'dd/MM/yyyy HH:mm')}"></span>
             </td>
             <td>
-                <span th:if="${url.getUrlChecks().size() != 0}" th:text="${url.getUrlChecks().get(0).getStatus()}"></span>
+                <span th:if="${url.getUrlChecks().size() != 0}" th:text="${url.getUrlChecks().get(0).getStatusCode()}"></span>
             </td>
         </tr>
         </tbody>
