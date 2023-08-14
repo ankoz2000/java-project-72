@@ -138,7 +138,7 @@ public class UrlController {
         }
 
         HttpResponse responseGet = Unirest
-                .post(url.getName())
+                .get(url.getName())
                 .asEmpty();
 
         Document doc = Jsoup.parse(responseGet.getBody().toString());
