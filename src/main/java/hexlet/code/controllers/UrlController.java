@@ -145,6 +145,8 @@ public class UrlController {
 
         UrlCheck urlCheck = new UrlCheck(url);
 
+        urlCheck.setStatusCode(responseGet.getStatus());
+
         if (!doc.title().isEmpty()) {
             log.log(System.Logger.Level.INFO, "Title is: " + doc.title());
             urlCheck.setTitle(doc.title());
