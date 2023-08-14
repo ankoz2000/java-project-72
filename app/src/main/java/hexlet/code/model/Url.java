@@ -23,7 +23,7 @@ public final class Url extends Model {
     @WhenCreated
     private Instant createdAt;
 
-    @OneToMany(mappedBy="url", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "url", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<UrlCheck> urlChecks;
 
     public Url(String name) {

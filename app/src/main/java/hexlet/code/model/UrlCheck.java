@@ -10,8 +10,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.GeneratedValue;
 import java.time.Instant;
 
-import hexlet.code.model.Url;
-
 @Entity
 public final class UrlCheck extends Model {
 

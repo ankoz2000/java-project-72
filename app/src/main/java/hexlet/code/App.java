@@ -73,7 +73,7 @@ public class App {
                 path("{id}", () -> {
                     get(UrlController.showUrl);
                 });
-                path("{id}/checks",() -> {
+                path("{id}/checks", () -> {
                     get(UrlController.checkUrl);
                 });
             });
