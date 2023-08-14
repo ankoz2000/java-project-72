@@ -139,7 +139,7 @@ public class UrlController {
 
         HttpResponse responseGet = Unirest
                 .get(url.getName())
-                .asEmpty();
+                .asString();
 
         Document doc = Jsoup.parse(responseGet.getBody().toString());
 
