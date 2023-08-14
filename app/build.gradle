@@ -15,7 +15,7 @@ repositories {
 }
 
 application {
-    mainClass = 'app.hexlet.code.App'
+    mainClass = 'hexlet.code.App'
 }
 
 compileJava {
