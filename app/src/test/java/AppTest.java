@@ -58,8 +58,8 @@ public final class AppTest {
 
     @BeforeEach
     void beforeEach() {
-        database.script().run("/truncate.sql");
-        database.script().run("/seed-test-db.sql");
+        database.script().run("/src/test/resources/truncate.sql");
+        database.script().run("/src/test/resources/seed-test-db.sql");
     }
 
     @Nested
