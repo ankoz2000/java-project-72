@@ -52,7 +52,19 @@ public class UrlController {
         if (exists) {
             ctx.sessionAttribute("flash", "Страница уже существует");
             ctx.sessionAttribute("flash-type", "danger");
-            ctx.attribute("url", receivedUrl);
+            String term = ctx.queryParamAsClass("term", String.class).getOrDefault("");
+
+            int lastPage = 1;
+            int currentPage = 1;
+            List<Integer> pages = IntStream
+                    .range(1, lastPage)
+                    .boxed()
+                    .collect(Collectors.toList());
+
+            ctx.attribute("url", urlEntity);
+            ctx.attribute("term", term);
+            ctx.attribute("pages", pages);
+            ctx.attribute("currentPage", currentPage);
             ctx.render("urls/index.html");
         }
 
