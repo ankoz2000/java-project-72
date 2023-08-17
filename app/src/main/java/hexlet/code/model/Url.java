@@ -10,6 +10,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.FetchType;
 import javax.persistence.CascadeType;
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -23,8 +24,8 @@ public final class Url extends Model {
     @WhenCreated
     private Instant createdAt;
 
-    @OneToMany(mappedBy = "url", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<UrlCheck> urlChecks;
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<UrlCheck> urlChecks = new ArrayList<>();
 
     public Url(String name) {
         this.name = name;
@@ -63,5 +64,9 @@ public final class Url extends Model {
 
     public void setUrlChecks(List<UrlCheck> urlChecks) {
         this.urlChecks = urlChecks;
+    }
+
+    public void addUrlCheck(UrlCheck urlCheck) {
+        this.urlChecks.add(urlCheck);
     }
 }

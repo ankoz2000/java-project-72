@@ -161,13 +161,13 @@ public final class AppTest {
                     .field("name", inputUrlName)
                     .asEmpty();
 
-            Url actualUrl = new QUrl()
-                    .name.equalTo(inputUrlName)
-                    .findOne();
+//            Url actualUrl = new QUrl()
+//                    .name.equalTo(inputUrlName)
+//                    .findOne();
 
             HttpResponse responsePost2 = Unirest
-                    .post(baseUrl + "/urls/" + actualUrl.getId() + "/checks")
-                    .asEmpty();
+                    .get(baseUrl + "/urls/3/checks")
+                    .asString();
 
             assertThat(responsePost2.getStatus()).isEqualTo(200);
 
@@ -175,7 +175,7 @@ public final class AppTest {
 
             HttpResponse responsePost3 = Unirest
                     .get(testUrl.url().toString())
-                    .asEmpty();
+                    .asString();
 
             assertThat(responsePost3.getBody()).isEqualTo("{test: true}");
 

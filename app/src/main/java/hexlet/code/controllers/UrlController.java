@@ -155,7 +155,7 @@ public class UrlController {
 
         Document doc = Jsoup.parse(responseGet.getBody().toString());
 
-        UrlCheck urlCheck = new UrlCheck(url);
+        UrlCheck urlCheck = new UrlCheck();
 
         urlCheck.setStatusCode(responseGet.getStatus());
 
@@ -177,7 +177,9 @@ public class UrlController {
             urlCheck.setDescription(metaElement.attributes().get("content"));
         }
 
-        urlCheck.save();
+        url.addUrlCheck(urlCheck);
+
+        url.save();
 
         ctx.attribute("url", url);
         ctx.attribute("urlCheck", urlCheck);

@@ -21,31 +21,26 @@ public final class UrlCheck extends Model {
     private String h1;
     @Lob
     private String description;
-    @ManyToOne
-    private Url url;
     @WhenCreated
     private Instant createdAt;
+
+    public UrlCheck() {
+    }
 
     public UrlCheck(String title) {
         this.title = title;
     }
 
-    public UrlCheck(Url url) {
-        this.url = url;
-    }
-
     public UrlCheck(String title, Integer statusCode, Url url) {
         this.statusCode = statusCode;
         this.title = title;
-        this.url = url;
     }
 
-    public UrlCheck(Integer statusCode, String title, String h1, String description, Url url) {
+    public UrlCheck(Integer statusCode, String title, String h1, String description) {
         this.statusCode = statusCode;
         this.title = title;
         this.h1 = h1;
         this.description = description;
-        this.url = url;
     }
 
     public Integer getId() {
@@ -94,13 +89,5 @@ public final class UrlCheck extends Model {
 
     public void setCreatedAt(Instant createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public Url getUrl() {
-        return url;
-    }
-
-    public void setUrl(Url url) {
-        this.url = url;
     }
 }
