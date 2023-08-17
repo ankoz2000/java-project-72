@@ -6,7 +6,6 @@ import io.ebean.annotation.WhenCreated;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 import javax.persistence.GeneratedValue;
 import java.time.Instant;
 

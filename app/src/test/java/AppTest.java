@@ -1,6 +1,5 @@
 import hexlet.code.App;
 import hexlet.code.model.Url;
-import hexlet.code.model.query.QUrl;
 import io.ebean.DB;
 import io.ebean.Database;
 import io.javalin.Javalin;
