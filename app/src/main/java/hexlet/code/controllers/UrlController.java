@@ -37,10 +37,12 @@ public class UrlController {
             url = new java.net.URL(receivedUrl);
         } catch (MalformedURLException urlEx) {
             log.log(System.Logger.Level.ERROR, "Incorrect input url: " + receivedUrl);
+            Url incorrectUrl = new Url();
+            incorrectUrl.setName(receivedUrl);
 
             ctx.sessionAttribute("flash", "Некорректный URL");
             ctx.sessionAttribute("flash-type", "danger");
-            ctx.attribute("url", receivedUrl);
+            ctx.attribute("url", incorrectUrl);
             ctx.render("index.html");
             return;
         }
