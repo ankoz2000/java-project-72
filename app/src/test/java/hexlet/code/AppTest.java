@@ -1,5 +1,7 @@
-import hexlet.code.App;
+package hexlet.code;
+
 import hexlet.code.model.Url;
+import hexlet.code.model.query.QUrl;
 import io.ebean.DB;
 import io.ebean.Database;
 import io.javalin.Javalin;
@@ -15,6 +17,8 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Nested;
 
 import java.io.IOException;
+import java.time.Instant;
+import java.time.temporal.ChronoField;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -132,24 +136,12 @@ public final class AppTest {
             assertThat(body).contains(inputUrlName);
 //            assertThat(body).contains("Страница успешно добавлена");
 
-//            Url actualUrl = new QUrl()
-//                    .name.equalTo(inputUrlName)
-//                    .findOne();
-//
-//            assertThat(actualUrl).isNotNull();
-//            assertThat(actualUrl.getName()).isEqualTo(inputUrlName);
+            Url actualUrl = new QUrl()
+                    .name.equalTo(inputUrlName)
+                    .findOne();
 
-//            Instant today = Instant.now();
-//            Instant createdAt = actualUrl.getCreatedAt();
-//
-//            assertThat(createdAt.get(ChronoField.YEAR))
-//                    .isEqualTo(today.get(ChronoField.YEAR));
-//            assertThat(createdAt.get(ChronoField.MONTH_OF_YEAR))
-//                    .isEqualTo(today.get(ChronoField.MONTH_OF_YEAR));
-//            assertThat(createdAt.get(ChronoField.DAY_OF_MONTH))
-//                    .isEqualTo(today.get(ChronoField.DAY_OF_MONTH));
-//            assertThat(createdAt.get(ChronoField.HOUR_OF_DAY))
-//                    .isEqualTo(today.get(ChronoField.HOUR_OF_DAY));
+            assertThat(actualUrl).isNotNull();
+            assertThat(actualUrl.getName()).isEqualTo(inputUrlName);
         }
 
         @Test
@@ -160,14 +152,15 @@ public final class AppTest {
                     .field("name", inputUrlName)
                     .asEmpty();
 
-//            Url actualUrl = new QUrl()
-//                    .name.equalTo(inputUrlName)
-//                    .findOne();
+            Url actualUrl = new QUrl()
+                    .name.equalTo(inputUrlName)
+                    .findOne();
 
             HttpResponse responsePost2 = Unirest
                     .get(baseUrl + "/urls/3/checks")
                     .asString();
 
+            assertThat(actualUrl).isNotNull();
             assertThat(responsePost2.getStatus()).isEqualTo(200);
 
             HttpUrl testUrl = server.url("/v1/chat/");
