@@ -38,7 +38,6 @@ public class UrlController {
         } catch (MalformedURLException urlEx) {
             log.log(System.Logger.Level.ERROR, "Incorrect input url: " + receivedUrl);
             Url incorrectUrl = new Url();
-            incorrectUrl.setName(receivedUrl);
 
             ctx.sessionAttribute("flash", "Некорректный URL");
             ctx.sessionAttribute("flash-type", "danger");

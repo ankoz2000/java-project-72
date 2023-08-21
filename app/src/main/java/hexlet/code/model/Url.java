@@ -31,6 +31,7 @@ public final class Url extends Model {
     }
 
     public Url() {
+        name = "";
     }
 
     public Integer getId() {
