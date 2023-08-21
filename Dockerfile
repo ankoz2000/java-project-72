@@ -12,7 +12,7 @@ ENV GRADLE_HOME=/opt/gradle
 
 RUN mv gradle-${GRADLE_VERSION} ${GRADLE_HOME}
 
-RUN chmod +x $GRADLE_HOME/bin
+RUN chmod +x $GRADLE_HOME
 
 ENV PATH=$PATH:$GRADLE_HOME/bin
 
