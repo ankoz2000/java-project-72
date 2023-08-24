@@ -20,7 +20,8 @@ WORKDIR /
 
 COPY / .
 
-RUN chmod +x /opt/gradle/bin/gradle
+RUN chmod +x $GRADLE_HOME/bin/gradle
+RUN chmod +x $GRADLE_HOME/bin/gradle.bat
 
 RUN ls -l $GRADLE_HOME/bin
 RUN $GRADLE_HOME installDist
