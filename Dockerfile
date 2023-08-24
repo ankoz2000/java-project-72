@@ -22,7 +22,7 @@ COPY / .
 
 RUN chmod +x /opt/gradle/bin/gradle
 
-RUN ls -l $GRADLE_HOME
+RUN ls -l $GRADLE_HOME/bin
 RUN $GRADLE_HOME installDist
 
 CMD ./build/install/app/bin/app
