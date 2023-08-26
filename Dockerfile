@@ -25,6 +25,6 @@ RUN chmod +x $GRADLE_HOME/bin/gradle.bat
 RUN chmod +x /opt/gradle
 
 RUN ls -l /opt
-RUN $GRADLE_HOME installDist
+RUN sudo $GRADLE_HOME installDist
 
 CMD ./build/install/app/bin/app
