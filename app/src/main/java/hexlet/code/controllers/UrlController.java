@@ -42,7 +42,7 @@ public class UrlController {
             ctx.sessionAttribute("flash", "Некорректный URL");
             ctx.sessionAttribute("flash-type", "danger");
             ctx.attribute("url", incorrectUrl);
-            ctx.render("urls/index.html");
+            ctx.render("index.html");
             return;
         }
         String port = url.getPort() != -1 ? ":" + url.getPort() : "";
@@ -67,6 +67,7 @@ public class UrlController {
             ctx.attribute("pages", pages);
             ctx.attribute("currentPage", currentPage);
             ctx.render("urls/index.html");
+            return;
         }
 
         log.log(System.Logger.Level.INFO, "Add url: " + url.getProtocol() + "://" + url.getHost() + port);
