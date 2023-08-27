@@ -12,19 +12,12 @@ ENV GRADLE_HOME=/opt/gradle
 
 RUN mv gradle-${GRADLE_VERSION} ${GRADLE_HOME}
 
-RUN chmod +x $GRADLE_HOME
-
 ENV PATH=$PATH:$GRADLE_HOME/bin
 
-WORKDIR /
+WORKDIR /app
 
-COPY / .
+COPY /app .
 
-RUN chmod +x $GRADLE_HOME/bin/gradle
-RUN chmod +x $GRADLE_HOME/bin/gradle.bat
-RUN chmod +x /opt/gradle
+RUN gradle installDist
 
-RUN ls -l /opt
-RUN sudo $GRADLE_HOME installDist
-
-CMD ./build/install/app/bin/app
+CMD ./build/install/java-javalin-blog/bin/java-javalin-blog
