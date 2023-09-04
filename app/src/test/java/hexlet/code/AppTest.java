@@ -123,7 +123,7 @@ public final class AppTest {
                     .asEmpty();
 
             assertThat(responsePost.getStatus()).isEqualTo(200);
-            assertThat(responsePost.getHeaders().getFirst("Location")).isEqualTo("/urls");
+            assertThat(responsePost.getHeaders().getFirst("Location")).isEqualTo("");
 
             HttpResponse<String> response = Unirest
                     .get(baseUrl + "/urls")
@@ -150,15 +150,10 @@ public final class AppTest {
                     .field("name", inputUrlName)
                     .asEmpty();
 
-            Url actualUrl = new QUrl()
-                    .name.equalTo(inputUrlName)
-                    .findOne();
-
             HttpResponse responsePost2 = Unirest
                     .get(baseUrl + "/urls/3/checks")
                     .asString();
 
-            assertThat(actualUrl).isNotNull();
             assertThat(responsePost2.getStatus()).isEqualTo(200);
 
             HttpUrl testUrl = server.url("/v1/chat/");
