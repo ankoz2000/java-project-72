@@ -10,7 +10,7 @@
   <form action="/urls" method="post">
     <div class="mb-3">
       <label for="name" class="form-label">Ссылка</label>
-      <input type="text" class="form-control" id="name" name="name" th:value="${url.getName()}">
+      <input type="text" class="form-control" id="name" name="url" th:value="${url.getName()}">
     </div>
     <button type="submit" class="btn btn-primary">Создать</button>
   </form>
