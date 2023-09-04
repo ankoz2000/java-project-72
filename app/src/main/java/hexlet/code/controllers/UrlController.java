@@ -42,7 +42,7 @@ public class UrlController {
             ctx.sessionAttribute("flash", "Некорректный URL");
             ctx.sessionAttribute("flash-type", "danger");
             ctx.attribute("url", incorrectUrl);
-            ctx.render("index.html");
+            ctx.render("new.html");
             return;
         }
         String port = url.getPort() != -1 ? ":" + url.getPort() : "";
