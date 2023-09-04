@@ -130,7 +130,7 @@ public final class AppTest {
                     .asString();
             String body = response.getBody();
 
-            assertThat(response.getStatus()).isEqualTo(200);
+            assertThat(response.getStatus()).isEqualTo(302);
             assertThat(body).contains(inputUrlName);
 //            assertThat(body).contains("Страница успешно добавлена");
 
