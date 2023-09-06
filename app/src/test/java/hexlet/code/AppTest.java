@@ -122,7 +122,7 @@ public final class AppTest {
                     .field("name", inputUrlName)
                     .asEmpty();
 
-            assertThat(responsePost.getStatus()).isEqualTo(200);
+            assertThat(responsePost.getStatus()).isEqualTo(302);
             assertThat(responsePost.getHeaders().getFirst("Location")).isEqualTo("");
 
             HttpResponse<String> response = Unirest
