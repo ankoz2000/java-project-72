@@ -52,7 +52,7 @@ public class UrlController {
         Url exists = new QUrl()
                 .name.equalTo(normalizedUrl)
                 .findOne();
-       if (exists != null) {
+        if (exists != null) {
             ctx.sessionAttribute("flash", "Страница уже существует");
             ctx.sessionAttribute("flash-type", "info");
         } else {
