@@ -31,9 +31,6 @@ public class UrlController {
         java.net.URL url;
         log.log(System.Logger.Level.INFO, "Received url: " + receivedUrl);
         try {
-            if (receivedUrl == null || receivedUrl.isEmpty()) {
-                throw new MalformedURLException();
-            }
             url = new java.net.URL(receivedUrl);
         } catch (MalformedURLException urlEx) {
             log.log(System.Logger.Level.ERROR, "Incorrect input url: " + receivedUrl);
@@ -41,42 +38,30 @@ public class UrlController {
 
             ctx.sessionAttribute("flash", "Некорректный URL");
             ctx.sessionAttribute("flash-type", "danger");
-            ctx.attribute("url", incorrectUrl);
-            ctx.render("urls/new.html");
+            ctx.redirect("/");
             return;
         }
-        String port = url.getPort() != -1 ? ":" + url.getPort() : "";
-        Url urlEntity = new Url(url.getProtocol() + "://" + url.getHost() + port);
-        boolean exists = new QUrl()
-                .name.equalTo(url.toString())
-                .exists();
-        if (exists) {
+        String normalizedUrl = String
+            .format(
+                "%s://%s%s",
+                url.getProtocol(),
+                url.getHost(),
+                url.getPort() == -1 ? "" : ":" + url.getPort()
+            )
+            .toLowerCase();
+        Url exists = new QUrl()
+                .name.equalTo(normalizedUrl)
+                .findOne();
+       if (exists != null) {
             ctx.sessionAttribute("flash", "Страница уже существует");
-            ctx.sessionAttribute("flash-type", "danger");
-            String term = ctx.queryParamAsClass("term", String.class).getOrDefault("");
-
-            int lastPage = 1;
-            int currentPage = 1;
-            List<Integer> pages = IntStream
-                    .range(1, lastPage)
-                    .boxed()
-                    .collect(Collectors.toList());
-
-            ctx.attribute("url", urlEntity);
-            ctx.attribute("term", term);
-            ctx.attribute("pages", pages);
-            ctx.attribute("currentPage", currentPage);
-            ctx.render("urls/index.html");
-            return;
+            ctx.sessionAttribute("flash-type", "info");
+        } else {
+            Url newUrl = new Url(normalizedUrl);
+            newUrl.save();
+           log.log(System.Logger.Level.INFO, "Add url: " + normalizedUrl);
+            ctx.sessionAttribute("flash", "Страница успешно добавлена");
+            ctx.sessionAttribute("flash-type", "success");
         }
-
-        log.log(System.Logger.Level.INFO, "Add url: " + url.getProtocol() + "://" + url.getHost() + port);
-
-        urlEntity.save();
-
-        ctx.sessionAttribute("flash", "Страница успешно добавлена");
-        ctx.sessionAttribute("flash-type", "success");
-        ctx.redirect("/urls");
     };
 
     public static Handler listUrls = ctx -> {
