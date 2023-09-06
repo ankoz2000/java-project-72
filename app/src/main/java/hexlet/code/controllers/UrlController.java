@@ -54,6 +54,7 @@ public class UrlController {
             ctx.sessionAttribute("flash", "Страница уже существует");
             ctx.sessionAttribute("flash-type", "info");
         } else {
+            exists = new Url(normalizedUrl);
             exists.save();
             log.log(System.Logger.Level.INFO, "Add url: " + normalizedUrl);
             ctx.sessionAttribute("flash", "Страница успешно добавлена");
