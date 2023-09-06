@@ -58,7 +58,7 @@ public class UrlController {
         } else {
             Url newUrl = new Url(normalizedUrl);
             newUrl.save();
-           log.log(System.Logger.Level.INFO, "Add url: " + normalizedUrl);
+            log.log(System.Logger.Level.INFO, "Add url: " + normalizedUrl);
             ctx.sessionAttribute("flash", "Страница успешно добавлена");
             ctx.sessionAttribute("flash-type", "success");
         }
