@@ -119,7 +119,7 @@ public final class AppTest {
             String inputUrlName = "https://vk.com";
             HttpResponse responsePost = Unirest
                     .post(baseUrl + "/urls")
-                    .field("name", inputUrlName)
+                    .field("url", inputUrlName)
                     .asEmpty();
 
             assertThat(responsePost.getStatus()).isEqualTo(302);
