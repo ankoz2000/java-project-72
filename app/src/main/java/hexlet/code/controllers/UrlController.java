@@ -94,14 +94,14 @@ public class UrlController {
         ctx.attribute("term", term);
         ctx.attribute("pages", pages);
         ctx.attribute("currentPage", currentPage);
-        ctx.render("urls/index.html");
+        ctx.redirect("urls/index.html");
     };
 
     public static Handler newUrl = ctx -> {
         Url url = new Url();
 
         ctx.attribute("url", url);
-        ctx.render("urls/new.html");
+        ctx.redirect("urls/new.html");
     };
 
     public static Handler showUrl = ctx -> {
@@ -119,7 +119,7 @@ public class UrlController {
 
         ctx.attribute("url", url);
         ctx.attribute("urlChecks", url.getUrlChecks());
-        ctx.render("urls/show.html");
+        ctx.redirect("urls/show.html");
     };
 
     public static Handler checkUrl = ctx -> {
@@ -171,6 +171,6 @@ public class UrlController {
         ctx.attribute("urlCheck", urlCheck);
         ctx.sessionAttribute("flash", "Страница успешно проверена");
         ctx.sessionAttribute("flash-type", "success");
-        ctx.render("urls/show.html");
+        ctx.redirect("urls/show.html");
     };
 }
