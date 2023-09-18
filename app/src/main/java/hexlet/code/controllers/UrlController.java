@@ -101,7 +101,7 @@ public class UrlController {
         Url url = new Url();
 
         ctx.attribute("url", url);
-        ctx.redirect("urls/new.html");
+        ctx.render("urls/new.html");
     };
 
     public static Handler showUrl = ctx -> {
@@ -119,7 +119,7 @@ public class UrlController {
 
         ctx.attribute("url", url);
         ctx.attribute("urlChecks", url.getUrlChecks());
-        ctx.redirect("urls/show.html");
+        ctx.render("urls/show.html");
     };
 
     public static Handler checkUrl = ctx -> {
@@ -171,6 +171,6 @@ public class UrlController {
         ctx.attribute("urlCheck", urlCheck);
         ctx.sessionAttribute("flash", "Страница успешно проверена");
         ctx.sessionAttribute("flash-type", "success");
-        ctx.redirect("urls/show.html");
+        ctx.render("urls/show.html");
     };
 }
