@@ -94,7 +94,7 @@ public class UrlController {
         ctx.attribute("term", term);
         ctx.attribute("pages", pages);
         ctx.attribute("currentPage", currentPage);
-        ctx.redirect("urls/index.html");
+        ctx.render("urls/index.html");
     };
 
     public static Handler newUrl = ctx -> {
