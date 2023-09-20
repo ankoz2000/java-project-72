@@ -1,27 +1,16 @@
 package hexlet.code.model;
 
-import io.ebean.Model;
-import io.ebean.annotation.WhenCreated;
+import java.sql.Timestamp;
 
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import java.time.Instant;
+public final class UrlCheck {
 
-@Entity
-public final class UrlCheck extends Model {
-
-    @Id
-    @GeneratedValue
     private Integer id;
     private Integer statusCode;
     private String title;
     private String h1;
-    @Lob
     private String description;
-    @WhenCreated
-    private Instant createdAt;
+    private Timestamp createdAt;
+    private Integer urlId;
 
     public UrlCheck() {
     }
@@ -30,7 +19,7 @@ public final class UrlCheck extends Model {
         this.title = title;
     }
 
-    public UrlCheck(String title, Integer statusCode, Url url) {
+    public UrlCheck(String title, Integer statusCode) {
         this.statusCode = statusCode;
         this.title = title;
     }
@@ -82,11 +71,19 @@ public final class UrlCheck extends Model {
         this.description = description;
     }
 
-    public Instant getCreatedAt() {
+    public Timestamp getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Instant createdAt) {
+    public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Integer getUrlId() {
+        return urlId;
+    }
+
+    public void setUrlId(Integer urlId) {
+        this.urlId = urlId;
     }
 }

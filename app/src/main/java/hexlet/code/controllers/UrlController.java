@@ -4,6 +4,8 @@ import groovy.util.logging.Slf4j;
 import hexlet.code.model.Url;
 import hexlet.code.model.UrlCheck;
 import hexlet.code.model.query.QUrl;
+import hexlet.code.repository.UrlCheckRepository;
+import hexlet.code.repository.UrlRepository;
 import io.ebean.PagedList;
 import io.javalin.http.Handler;
 
@@ -17,10 +19,10 @@ import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import static io.avaje.classpath.scanner.internal.ScanLog.log;
 
 @Slf4j
 public class UrlController {
@@ -47,15 +49,13 @@ public class UrlController {
                 url.getPort() == -1 ? "" : ":" + url.getPort()
             )
             .toLowerCase();
-        Url exists = new QUrl()
-                .name.equalTo(normalizedUrl)
-                .findOne();
-        if (exists != null) {
+        Optional<Url> exists = UrlRepository.findByName(normalizedUrl);
+        if (exists.isPresent()) {
             ctx.sessionAttribute("flash", "Страница уже существует");
             ctx.sessionAttribute("flash-type", "info");
         } else {
-            exists = new Url(normalizedUrl);
-            exists.save();
+            Url newUrl = new Url(normalizedUrl);
+            UrlRepository.save(newUrl);
             log.log(System.Logger.Level.INFO, "Add url: " + normalizedUrl);
             ctx.sessionAttribute("flash", "Страница успешно добавлена");
             ctx.sessionAttribute("flash-type", "success");
@@ -68,27 +68,14 @@ public class UrlController {
         int page = ctx.queryParamAsClass("page", Integer.class).getOrDefault(1) - 1;
         int rowsPerPage = 10;
 
-        PagedList<Url> pagedUrls = new QUrl()
-                .name.icontains(term)
-                .setFirstRow(page * rowsPerPage)
-                .setMaxRows(rowsPerPage)
-                .orderBy()
-                .id.asc()
-                .findPagedList();
+        List<Url> urls = UrlRepository.getEntities();
 
-        List<Url> urls = pagedUrls.getList();
-
-        int lastPage = pagedUrls.getTotalPageCount() + 1;
-        int currentPage = pagedUrls.getPageIndex() + 1;
+        int lastPage = urls.size()/10 + 1;
+        int currentPage = urls.size()/10 + 1;
         List<Integer> pages = IntStream
                 .range(1, lastPage)
                 .boxed()
                 .collect(Collectors.toList());
-
-        if (!urls.isEmpty()) {
-            log.log(System.Logger.Level.INFO, "Urls checks object: " + urls.get(0).getUrlChecks());
-            log.log(System.Logger.Level.INFO, "Urls check size: " + urls.get(0).getUrlChecks().size());
-        }
 
         ctx.attribute("urls", urls);
         ctx.attribute("term", term);
@@ -107,18 +94,20 @@ public class UrlController {
     public static Handler showUrl = ctx -> {
         int id = ctx.pathParamAsClass("id", Integer.class).getOrDefault(null);
 
-        Url url = new QUrl()
-                .id.equalTo(id)
-                .findOne();
+        Optional<Url> optionalUrl = UrlRepository.find(id);
 
-        if (url == null) {
+        if (!optionalUrl.isPresent()) {
             throw new NotFoundResponse();
         }
+        Url url = optionalUrl.get();
+
+        List<UrlCheck> urlChecks = UrlCheckRepository.findByUrlId(url.getId());
 
         log.log(System.Logger.Level.INFO, "Show url with id = " + url.getId() + " and name: " + url.getName());
+        log.log(System.Logger.Level.INFO, "UrlChecks size is: " + urlChecks.size());
 
         ctx.attribute("url", url);
-        ctx.attribute("urlChecks", url.getUrlChecks());
+        ctx.attribute("urlChecks", urlChecks);
         ctx.render("urls/show.html");
     };
 
@@ -127,13 +116,13 @@ public class UrlController {
 
         log.log(System.Logger.Level.INFO, "Add url check for url with id = " + id);
 
-        Url url = new QUrl()
-                .id.equalTo(id)
-                .findOne();
+        Optional<Url> urlOptional = UrlRepository.find(id);
 
-        if (url == null) {
+        if (!urlOptional.isPresent()) {
             throw new NotFoundResponse();
         }
+
+        Url url = urlOptional.get();
 
         HttpResponse responseGet = Unirest
                 .get(url.getName())
@@ -163,9 +152,8 @@ public class UrlController {
             urlCheck.setDescription(metaElement.attributes().get("content"));
         }
 
-        url.addUrlCheck(urlCheck);
-
-        url.save();
+        urlCheck.setUrlId(url.getId());
+        UrlCheckRepository.save(urlCheck);
 
         ctx.attribute("url", url);
         ctx.attribute("urlCheck", urlCheck);

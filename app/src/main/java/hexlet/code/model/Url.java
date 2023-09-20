@@ -1,30 +1,14 @@
 package hexlet.code.model;
 
-import io.ebean.Model;
-import io.ebean.annotation.WhenCreated;
+import java.sql.Timestamp;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.CascadeType;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
+public final class Url {
 
-@Entity
-public final class Url extends Model {
-
-    @Id
-    @GeneratedValue
     private Integer id;
     private String name;
 
-    @WhenCreated
-    private Instant createdAt;
+    private Timestamp createdAt;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<UrlCheck> urlChecks = new ArrayList<>();
 
     public Url(String name) {
         this.name = name;
@@ -50,23 +34,11 @@ public final class Url extends Model {
         this.name = name;
     }
 
-    public Instant getCreatedAt() {
+    public Timestamp getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(Instant createdAt) {
+    public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
-    }
-
-    public List<UrlCheck> getUrlChecks() {
-        return urlChecks;
-    }
-
-    public void setUrlChecks(List<UrlCheck> urlChecks) {
-        this.urlChecks = urlChecks;
-    }
-
-    public void addUrlCheck(UrlCheck urlCheck) {
-        this.urlChecks.add(urlCheck);
     }
 }
