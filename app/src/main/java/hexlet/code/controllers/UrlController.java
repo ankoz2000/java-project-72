@@ -26,17 +26,17 @@ import java.util.stream.IntStream;
 
 @Slf4j
 public class UrlController {
-    private static final Logger log = LoggerFactory.getLogger(UrlController.class);
+    private static final Logger LOG = LoggerFactory.getLogger(UrlController.class);
 
     public static Handler addUrl = ctx -> {
         String receivedUrl = ctx.formParam("url");
 
         java.net.URL url;
-        log.info("Received url: " + receivedUrl);
+        LOG.info("Received url: " + receivedUrl);
         try {
             url = new java.net.URL(receivedUrl);
         } catch (MalformedURLException urlEx) {
-            log.error("Incorrect input url: " + receivedUrl);
+            LOG.error("Incorrect input url: " + receivedUrl);
             ctx.sessionAttribute("flash", "Некорректный URL");
             ctx.sessionAttribute("flash-type", "danger");
             ctx.redirect("/");
@@ -57,7 +57,7 @@ public class UrlController {
         } else {
             Url newUrl = new Url(normalizedUrl);
             UrlRepository.save(newUrl);
-            log.info("Add url: " + normalizedUrl);
+            LOG.info("Add url: " + normalizedUrl);
             ctx.sessionAttribute("flash", "Страница успешно добавлена");
             ctx.sessionAttribute("flash-type", "success");
         }
@@ -71,8 +71,8 @@ public class UrlController {
 
         List<Url> urls = UrlRepository.getEntities();
 
-        int lastPage = urls.size()/10 + 1;
-        int currentPage = urls.size()/10 + 1;
+        int lastPage = urls.size() / 10 + 1;
+        int currentPage = urls.size() / 10 + 1;
         List<Integer> pages = IntStream
                 .range(1, lastPage)
                 .boxed()
@@ -104,8 +104,8 @@ public class UrlController {
 
         List<UrlCheck> urlChecks = UrlCheckRepository.findByUrlId(url.getId());
 
-        log.info("Show url with id = " + url.getId() + " and name: " + url.getName());
-        log.info("UrlChecks size is: " + urlChecks.size());
+        LOG.info("Show url with id = " + url.getId() + " and name: " + url.getName());
+        LOG.info("UrlChecks size is: " + urlChecks.size());
 
         ctx.attribute("url", url);
         ctx.attribute("urlChecks", urlChecks);
@@ -115,7 +115,7 @@ public class UrlController {
     public static Handler checkUrl = ctx -> {
         int id = ctx.pathParamAsClass("id", Integer.class).getOrDefault(null);
 
-        log.info("Add url check for url with id = " + id);
+        LOG.info("Add url check for url with id = " + id);
 
         Optional<Url> urlOptional = UrlRepository.find(id);
 
@@ -136,20 +136,20 @@ public class UrlController {
         urlCheck.setStatusCode(responseGet.getStatus());
 
         if (!doc.title().isEmpty()) {
-            log.info("Title is: " + doc.title());
+            LOG.info("Title is: " + doc.title());
             urlCheck.setTitle(doc.title());
         }
 
         if (doc.selectFirst("h1") != null) {
-            log.info("H1 is: " + doc.selectFirst("h1").text());
+            LOG.info("H1 is: " + doc.selectFirst("h1").text());
             urlCheck.setH1(doc.selectFirst("h1").text());
         }
 
         Element metaElement = doc.selectFirst("meta[name=content]");
 
         if (metaElement != null) {
-            log.info("Meta is: " + metaElement);
-            log.info("Meta content is: " + metaElement.attributes().get("content"));
+            LOG.info("Meta is: " + metaElement);
+            LOG.info("Meta content is: " + metaElement.attributes().get("content"));
             urlCheck.setDescription(metaElement.attributes().get("content"));
         }
 

@@ -1,14 +1,11 @@
 package hexlet.code.repository;
 
-import hexlet.code.model.Url;
 import hexlet.code.model.UrlCheck;
 
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 public class UrlCheckRepository extends BaseRepository {
     public static void save(UrlCheck urlCheck) throws SQLException {
@@ -30,24 +27,6 @@ public class UrlCheckRepository extends BaseRepository {
             }
         }
     }
-//
-//    public static Optional<Url> find(Integer id) throws SQLException {
-//        var sql = "SELECT * FROM url_check WHERE id = ?";
-//        try (var conn = dataSource.getConnection();
-//             var stmt = conn.prepareStatement(sql)) {
-//            stmt.setLong(1, id);
-//            var resultSet = stmt.executeQuery();
-//            if (resultSet.next()) {
-//                var name = resultSet.getString("name");
-//                var createdAt = resultSet.getString("createdAt");
-//                var url = new Url(name);
-//                url.setId(id);
-//                url.setCreatedAt(Timestamp.valueOf(createdAt));
-//                return Optional.of(url);
-//            }
-//            return Optional.empty();
-//        }
-//    }
 
     public static List<UrlCheck> findByUrlId(Integer urlId) throws SQLException {
         var sql = "SELECT * FROM url_check WHERE urlId = ?";
