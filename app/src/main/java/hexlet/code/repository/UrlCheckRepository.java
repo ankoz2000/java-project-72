@@ -30,24 +30,24 @@ public class UrlCheckRepository extends BaseRepository {
             }
         }
     }
-
-    public static Optional<Url> find(Integer id) throws SQLException {
-        var sql = "SELECT * FROM url_check WHERE id = ?";
-        try (var conn = dataSource.getConnection();
-             var stmt = conn.prepareStatement(sql)) {
-            stmt.setLong(1, id);
-            var resultSet = stmt.executeQuery();
-            if (resultSet.next()) {
-                var name = resultSet.getString("name");
-                var createdAt = resultSet.getString("createdAt");
-                var url = new Url(name);
-                url.setId(id);
-                url.setCreatedAt(Timestamp.valueOf(createdAt));
-                return Optional.of(url);
-            }
-            return Optional.empty();
-        }
-    }
+//
+//    public static Optional<Url> find(Integer id) throws SQLException {
+//        var sql = "SELECT * FROM url_check WHERE id = ?";
+//        try (var conn = dataSource.getConnection();
+//             var stmt = conn.prepareStatement(sql)) {
+//            stmt.setLong(1, id);
+//            var resultSet = stmt.executeQuery();
+//            if (resultSet.next()) {
+//                var name = resultSet.getString("name");
+//                var createdAt = resultSet.getString("createdAt");
+//                var url = new Url(name);
+//                url.setId(id);
+//                url.setCreatedAt(Timestamp.valueOf(createdAt));
+//                return Optional.of(url);
+//            }
+//            return Optional.empty();
+//        }
+//    }
 
     public static List<UrlCheck> findByUrlId(Integer urlId) throws SQLException {
         var sql = "SELECT * FROM url_check WHERE urlId = ?";
@@ -55,7 +55,7 @@ public class UrlCheckRepository extends BaseRepository {
              var stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, urlId);
             var resultSet = stmt.executeQuery();
-            var result = new ArrayList<Url>();
+            var result = new ArrayList<UrlCheck>();
             while (resultSet.next()) {
                 var id = resultSet.getInt("id");
                 var statusCode = resultSet.getInt("statusCode");
@@ -68,25 +68,6 @@ public class UrlCheckRepository extends BaseRepository {
                 urlCheck.setCreatedAt(createdAt);
                 urlCheck.setUrlId(urlId);
                 result.add(urlCheck);
-            }
-            return result;
-        }
-    }
-
-    public static List<UrlCheck> getEntities() throws SQLException {
-        var sql = "SELECT * FROM url_check";
-        try (var conn = dataSource.getConnection();
-             var stmt = conn.prepareStatement(sql)) {
-            var resultSet = stmt.executeQuery();
-            var result = new ArrayList<Url>();
-            while (resultSet.next()) {
-                var id = resultSet.getInt("id");
-                var name = resultSet.getString("name");
-                var createdAt = resultSet.getString("createdAt");
-                var url = new Url(name);
-                url.setId(id);
-                url.setCreatedAt(Timestamp.valueOf(createdAt));
-                result.add(url);
             }
             return result;
         }
