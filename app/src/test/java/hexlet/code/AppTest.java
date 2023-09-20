@@ -3,9 +3,6 @@ package hexlet.code;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import hexlet.code.model.Url;
-import hexlet.code.model.query.QUrl;
-import io.ebean.DB;
-import io.ebean.Database;
 import io.javalin.Javalin;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
@@ -73,7 +70,7 @@ public final class AppTest {
 
         dataSource = new HikariDataSource(hikariConfig);
 
-        var schema = hexlet.project.AppTest.class.getClassLoader().getResource("init.sql");
+        var schema = AppTest.class.getClassLoader().getResource("init.sql");
         var file = new File(schema.getFile());
         var sql = Files.lines(file.toPath())
                 .collect(Collectors.joining("\n"));
