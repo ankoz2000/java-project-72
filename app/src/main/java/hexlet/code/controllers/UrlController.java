@@ -3,10 +3,8 @@ package hexlet.code.controllers;
 import groovy.util.logging.Slf4j;
 import hexlet.code.model.Url;
 import hexlet.code.model.UrlCheck;
-import hexlet.code.model.query.QUrl;
 import hexlet.code.repository.UrlCheckRepository;
 import hexlet.code.repository.UrlRepository;
-import io.ebean.PagedList;
 import io.javalin.http.Handler;
 
 import java.net.MalformedURLException;
@@ -17,6 +15,8 @@ import org.jsoup.nodes.Element;
 
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,16 +26,17 @@ import java.util.stream.IntStream;
 
 @Slf4j
 public class UrlController {
+    private static final Logger log = LoggerFactory.getLogger(UrlController.class);
 
     public static Handler addUrl = ctx -> {
         String receivedUrl = ctx.formParam("url");
 
         java.net.URL url;
-        log.log(System.Logger.Level.INFO, "Received url: " + receivedUrl);
+        log.info("Received url: " + receivedUrl);
         try {
             url = new java.net.URL(receivedUrl);
         } catch (MalformedURLException urlEx) {
-            log.log(System.Logger.Level.ERROR, "Incorrect input url: " + receivedUrl);
+            log.error("Incorrect input url: " + receivedUrl);
             ctx.sessionAttribute("flash", "Некорректный URL");
             ctx.sessionAttribute("flash-type", "danger");
             ctx.redirect("/");
@@ -56,7 +57,7 @@ public class UrlController {
         } else {
             Url newUrl = new Url(normalizedUrl);
             UrlRepository.save(newUrl);
-            log.log(System.Logger.Level.INFO, "Add url: " + normalizedUrl);
+            log.info("Add url: " + normalizedUrl);
             ctx.sessionAttribute("flash", "Страница успешно добавлена");
             ctx.sessionAttribute("flash-type", "success");
         }
@@ -103,8 +104,8 @@ public class UrlController {
 
         List<UrlCheck> urlChecks = UrlCheckRepository.findByUrlId(url.getId());
 
-        log.log(System.Logger.Level.INFO, "Show url with id = " + url.getId() + " and name: " + url.getName());
-        log.log(System.Logger.Level.INFO, "UrlChecks size is: " + urlChecks.size());
+        log.info("Show url with id = " + url.getId() + " and name: " + url.getName());
+        log.info("UrlChecks size is: " + urlChecks.size());
 
         ctx.attribute("url", url);
         ctx.attribute("urlChecks", urlChecks);
@@ -114,7 +115,7 @@ public class UrlController {
     public static Handler checkUrl = ctx -> {
         int id = ctx.pathParamAsClass("id", Integer.class).getOrDefault(null);
 
-        log.log(System.Logger.Level.INFO, "Add url check for url with id = " + id);
+        log.info("Add url check for url with id = " + id);
 
         Optional<Url> urlOptional = UrlRepository.find(id);
 
@@ -135,20 +136,20 @@ public class UrlController {
         urlCheck.setStatusCode(responseGet.getStatus());
 
         if (!doc.title().isEmpty()) {
-            log.log(System.Logger.Level.INFO, "Title is: " + doc.title());
+            log.info("Title is: " + doc.title());
             urlCheck.setTitle(doc.title());
         }
 
         if (doc.selectFirst("h1") != null) {
-            log.log(System.Logger.Level.INFO, "H1 is: " + doc.selectFirst("h1").text());
+            log.info("H1 is: " + doc.selectFirst("h1").text());
             urlCheck.setH1(doc.selectFirst("h1").text());
         }
 
         Element metaElement = doc.selectFirst("meta[name=content]");
 
         if (metaElement != null) {
-            log.log(System.Logger.Level.INFO, "Meta is: " + metaElement);
-            log.log(System.Logger.Level.INFO, "Meta content is: " + metaElement.attributes().get("content"));
+            log.info("Meta is: " + metaElement);
+            log.info("Meta content is: " + metaElement.attributes().get("content"));
             urlCheck.setDescription(metaElement.attributes().get("content"));
         }
 
