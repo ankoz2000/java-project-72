@@ -71,7 +71,7 @@ public class App {
         return templateEngine;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws SQLException, IOException {
         Javalin app = getApp();
         app.start(getPort());
     }
