@@ -9,15 +9,14 @@ import java.util.List;
 
 public class UrlCheckRepository extends BaseRepository {
     public static void save(UrlCheck urlCheck) throws SQLException {
-        var sql = "INSERT INTO url_check (statusCode, title, h1, description, createdAt, urlId) VALUES (?, ?)";
+        var sql = "INSERT INTO url_check (statusCode, title, h1, description, urlId) VALUES (?, ?, ?, ?, ?)";
         try (var conn = dataSource.getConnection();
              var preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setInt(1, urlCheck.getStatusCode());
             preparedStatement.setString(2, urlCheck.getTitle());
             preparedStatement.setString(3, urlCheck.getH1());
             preparedStatement.setString(4, urlCheck.getDescription());
-            preparedStatement.setString(5, urlCheck.getCreatedAt().toString());
-            preparedStatement.setInt(6, urlCheck.getUrlId());
+            preparedStatement.setInt(5, urlCheck.getUrlId());
             preparedStatement.executeUpdate();
             var generatedKeys = preparedStatement.getGeneratedKeys();
             if (generatedKeys.next()) {
