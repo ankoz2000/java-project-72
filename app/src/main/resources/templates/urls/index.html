@@ -26,18 +26,18 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="url : ${urls}" th:object="${url}">
-            <td th:text="*{getId()}"></td>
+        <tr th:each="url : ${result}" th:object="${url}">
+            <td th:text="*{instance.key.getId()}"></td>
             <td>
-                <a th:href="@{/urls/{id}(id=*{getId()})}" th:text="${#strings.abbreviate(url.getName(), 30)}"></a>
+                <a th:href="@{/urls/{id}(id=*{instance.key.getId()})}" th:text="${#strings.abbreviate(instance.key.getName(), 30)}"></a>
             </td>
-            <td th:text="${url.getCreatedAt()}"></td>
+            <td th:text="${instance.key.getCreatedAt()}"></td>
             <td>
-                <span th:if="${url.getUrlChecks().size() != 0}"
-                      th:text="${url.getUrlChecks().get(0).getCreatedAt()}"></span>
+                <span th:if="${instance.value != null}"
+                      th:text="${instance.value.getCreatedAt().toLocalDateTime().toString()}"></span>
             </td>
             <td>
-                <span th:if="${url.getUrlChecks().size() != 0}" th:text="${url.getUrlChecks().get(0).getStatusCode()}"></span>
+                <span th:if="${instance.value != null}" th:text="${instance.value.getStatusCode()}"></span>
             </td>
         </tr>
         </tbody>

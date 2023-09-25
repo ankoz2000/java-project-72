@@ -18,8 +18,11 @@ import kong.unirest.Unirest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -70,6 +73,19 @@ public class UrlController {
         int rowsPerPage = 10;
 
         List<Url> urls = UrlRepository.getEntities();
+        List<UrlCheck> urlChecksLatest = UrlCheckRepository.findLatestForUrls(urls.stream()
+                .map(Url::getId)
+                .collect(Collectors.toList()));
+
+        Map<Url, UrlCheck> result = new HashMap<>();
+
+        urlChecksLatest.forEach(uc -> {
+            urls.forEach(u -> {
+                if (u.getId().equals(uc.getUrlId())) {
+                    result.put(u, uc);
+                }
+            });
+        });
 
         int lastPage = urls.size() / 10 + 1;
         int currentPage = urls.size() / 10 + 1;
@@ -79,6 +95,8 @@ public class UrlController {
                 .collect(Collectors.toList());
 
         ctx.attribute("urls", urls);
+        ctx.attribute("latestChecks", urlChecksLatest);
+        ctx.attribute("result", result);
         ctx.attribute("term", term);
         ctx.attribute("pages", pages);
         ctx.attribute("currentPage", currentPage);

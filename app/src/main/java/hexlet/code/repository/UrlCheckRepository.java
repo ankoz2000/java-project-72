@@ -50,4 +50,29 @@ public class UrlCheckRepository extends BaseRepository {
             return result;
         }
     }
+
+    public static List<UrlCheck> findLatestForUrls(List<Integer> urlIds) throws SQLException {
+        var sql = "SELECT * FROM url_check WHERE urlId IN (?) HAVING max(createdAt)";
+        try (var conn = dataSource.getConnection();
+             var stmt = conn.prepareStatement(sql)) {
+            stmt.setArray(1, conn.createArrayOf("int", urlIds.toArray()));
+            var resultSet = stmt.executeQuery();
+            var result = new ArrayList<UrlCheck>();
+            while (resultSet.next()) {
+                var id = resultSet.getInt("id");
+                var statusCode = resultSet.getInt("statusCode");
+                var title = resultSet.getString("title");
+                var h1 = resultSet.getString("h1");
+                var description = resultSet.getString("description");
+                var createdAt = resultSet.getTimestamp("createdAt");
+                var urlId = resultSet.getInt("urlId");
+                var urlCheck = new UrlCheck(statusCode, title, h1, description);
+                urlCheck.setId(id);
+                urlCheck.setCreatedAt(createdAt);
+                urlCheck.setUrlId(urlId);
+                result.add(urlCheck);
+            }
+            return result;
+        }
+    }
 }
