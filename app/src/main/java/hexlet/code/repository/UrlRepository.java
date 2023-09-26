@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public class UrlRepository extends BaseRepository {
     public static void save(Url url) throws SQLException {
-        var sql = "INSERT INTO url (name) VALUES (?)";
+        var sql = "INSERT INTO urls (name) VALUES (?)";
         try (var conn = dataSource.getConnection();
              var preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setString(1, url.getName());
@@ -25,7 +25,7 @@ public class UrlRepository extends BaseRepository {
     }
 
     public static Optional<Url> find(Integer id) throws SQLException {
-        var sql = "SELECT * FROM url WHERE id = ?";
+        var sql = "SELECT * FROM urls WHERE id = ?";
         try (var conn = dataSource.getConnection();
              var stmt = conn.prepareStatement(sql)) {
             stmt.setLong(1, id);
@@ -43,7 +43,7 @@ public class UrlRepository extends BaseRepository {
     }
 
     public static Optional<Url> findByName(String urlName) throws SQLException {
-        var sql = "SELECT * FROM url WHERE name = ?";
+        var sql = "SELECT * FROM urls WHERE name = ?";
         try (var conn = dataSource.getConnection();
              var stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, urlName);
@@ -62,7 +62,7 @@ public class UrlRepository extends BaseRepository {
     }
 
     public static List<Url> getEntities() throws SQLException {
-        var sql = "SELECT * FROM url";
+        var sql = "SELECT * FROM urls";
         try (var conn = dataSource.getConnection();
              var stmt = conn.prepareStatement(sql)) {
             var resultSet = stmt.executeQuery();

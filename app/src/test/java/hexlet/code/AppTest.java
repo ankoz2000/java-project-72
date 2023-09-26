@@ -70,7 +70,7 @@ public final class AppTest {
 
         dataSource = new HikariDataSource(hikariConfig);
 
-        var schema = AppTest.class.getClassLoader().getResource("init.sql");
+        var schema = AppTest.class.getClassLoader().getResource("schema.sql");
         var file = new File(schema.getFile());
         var sql = Files.lines(file.toPath())
                 .collect(Collectors.joining("\n"));

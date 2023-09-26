@@ -9,7 +9,7 @@ import java.util.List;
 
 public class UrlCheckRepository extends BaseRepository {
     public static void save(UrlCheck urlCheck) throws SQLException {
-        var sql = "INSERT INTO url_check (statusCode, title, h1, description, urlId) VALUES (?, ?, ?, ?, ?)";
+        var sql = "INSERT INTO url_checks (status_code, title, h1, description, url_id) VALUES (?, ?, ?, ?, ?)";
         try (var conn = dataSource.getConnection();
              var preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             preparedStatement.setInt(1, urlCheck.getStatusCode());
@@ -28,7 +28,7 @@ public class UrlCheckRepository extends BaseRepository {
     }
 
     public static List<UrlCheck> findByUrlId(Integer urlId) throws SQLException {
-        var sql = "SELECT * FROM url_check WHERE urlId = ?";
+        var sql = "SELECT * FROM url_checks WHERE url_id = ?";
         try (var conn = dataSource.getConnection();
              var stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, urlId);
@@ -52,7 +52,7 @@ public class UrlCheckRepository extends BaseRepository {
     }
 
     public static List<UrlCheck> findLatestForUrls(List<Integer> urlIds) throws SQLException {
-        var sql = "SELECT * FROM url_check WHERE urlId = ANY (?) GROUP BY id HAVING max(createdAt)";
+        var sql = "SELECT * FROM url_checks WHERE url_id = ANY (?) GROUP BY id HAVING max(created_at)";
         try (var conn = dataSource.getConnection();
              var stmt = conn.prepareStatement(sql)) {
             stmt.setArray(1, conn.createArrayOf("int", urlIds.toArray()));
