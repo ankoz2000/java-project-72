@@ -63,6 +63,7 @@ public class UrlController {
             ctx.sessionAttribute("flash", "Страница успешно добавлена");
             ctx.sessionAttribute("flash-type", "success");
         }
+        ctx.attribute("urls", UrlRepository.getEntities());
         ctx.redirect("/urls");
     };
 

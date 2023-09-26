@@ -20,7 +20,7 @@
       </tr>
       <tr>
         <td>Дата создания</td>
-        <td th:text="${#temporals.format(url.getCreatedAt(), 'dd/MM/yyyy HH:mm')}"></td>
+        <td th:text="*{getCreatedAt()}"></td>
       </tr>
       </tbody>
     </table>
@@ -41,13 +41,13 @@
       </tr>
     </thead>
     <tbody>
-      <tr th:each="urlCheck : ${urlChecks}" th:object="${urlCheck}">
+      <tr th:each="urlCheck : ${urlChecks}">
         <td th:text="${urlCheck.getId()}"></td>
         <td th:text="${urlCheck.getStatusCode()}"></td>
         <td th:text="${urlCheck.getTitle()}"></td>
         <td th:text="${urlCheck.getH1()}"></td>
         <td th:text="${urlCheck.getDescription()}"></td>
-        <td th:text="${#temporals.format(urlCheck.getCreatedAt(), 'dd/MM/yyyy HH:mm')}"></td>
+        <td th:text="${urlCheck.getCreatedAt()}"></td>
       </tr>
     </tbody>
   </table>
