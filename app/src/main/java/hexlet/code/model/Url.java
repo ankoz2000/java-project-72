@@ -9,6 +9,8 @@ public final class Url {
 
     private Timestamp createdAt;
 
+    private UrlCheck urlCheck;
+
 
     public Url(String name) {
         this.name = name;
@@ -40,5 +42,13 @@ public final class Url {
 
     public void setCreatedAt(Timestamp createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public UrlCheck getUrlCheck() {
+        return urlCheck;
+    }
+
+    public void setUrlCheck(UrlCheck urlCheck) {
+        this.urlCheck = urlCheck;
     }
 }

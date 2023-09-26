@@ -82,6 +82,7 @@ public class UrlController {
             urls.forEach(u -> {
                 if (u.getId().equals(uc.getUrlId())) {
                     result.put(u, uc);
+                    u.setUrlCheck(uc);
                 }
             });
         });
@@ -173,7 +174,7 @@ public class UrlController {
         urlCheck.setUrlId(url.getId());
         UrlCheckRepository.save(urlCheck);
 
-        ctx.attribute("url", url);
+        ctx.attribute("urls", url);
         ctx.attribute("urlCheck", urlCheck);
         ctx.sessionAttribute("flash", "Страница успешно проверена");
         ctx.sessionAttribute("flash-type", "success");

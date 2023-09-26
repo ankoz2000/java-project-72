@@ -26,18 +26,18 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="url : ${result}" th:object="${url}">
-            <td th:text="*{instance.key.getId()}"></td>
+        <tr th:each="url : ${urls}">
+            <td th:text="${url.getId()}"></td>
             <td>
-                <a th:href="@{/urls/{id}(id=*{instance.key.getId()})}" th:text="${#strings.abbreviate(instance.key.getName(), 30)}"></a>
+                <a th:href="@{/urls/{id}(id=${url.getId()})}" th:text="${#strings.abbreviate(url.getName(), 30)}"></a>
             </td>
-            <td th:text="${instance.key.getCreatedAt()}"></td>
+            <td th:text="${url.getCreatedAt()}"></td>
             <td>
-                <span th:if="${instance.value != null}"
-                      th:text="${instance.value.getCreatedAt().toLocalDateTime().toString()}"></span>
+                <span th:if="${url.getUrlCheck() != null}"
+                      th:text="${url.getUrlCheck().getCreatedAt()}"></span>
             </td>
             <td>
-                <span th:if="${instance.value != null}" th:text="${instance.value.getStatusCode()}"></span>
+                <span th:if="${url.getUrlCheck() != null}" th:text="${url.getUrlCheck().getStatusCode()}"></span>
             </td>
         </tr>
         </tbody>

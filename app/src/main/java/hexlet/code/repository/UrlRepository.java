@@ -32,7 +32,7 @@ public class UrlRepository extends BaseRepository {
             var resultSet = stmt.executeQuery();
             if (resultSet.next()) {
                 var name = resultSet.getString("name");
-                var createdAt = resultSet.getTimestamp("createdAt");
+                var createdAt = resultSet.getTimestamp("created_at");
                 var url = new Url(name);
                 url.setId(id);
                 url.setCreatedAt(createdAt);
@@ -51,7 +51,7 @@ public class UrlRepository extends BaseRepository {
             if (resultSet.next()) {
                 var id = resultSet.getInt("id");
                 var name = resultSet.getString("name");
-                var createdAt = resultSet.getTimestamp("createdAt");
+                var createdAt = resultSet.getTimestamp("created_at");
                 var url = new Url(name);
                 url.setId(id);
                 url.setCreatedAt(createdAt);
@@ -70,7 +70,7 @@ public class UrlRepository extends BaseRepository {
             while (resultSet.next()) {
                 var id = resultSet.getInt("id");
                 var name = resultSet.getString("name");
-                var createdAt = resultSet.getTimestamp("createdAt");
+                var createdAt = resultSet.getTimestamp("created_at");
                 var url = new Url(name);
                 url.setId(id);
                 url.setCreatedAt(createdAt);

@@ -36,11 +36,11 @@ public class UrlCheckRepository extends BaseRepository {
             var result = new ArrayList<UrlCheck>();
             while (resultSet.next()) {
                 var id = resultSet.getInt("id");
-                var statusCode = resultSet.getInt("statusCode");
+                var statusCode = resultSet.getInt("status_code");
                 var title = resultSet.getString("title");
                 var h1 = resultSet.getString("h1");
                 var description = resultSet.getString("description");
-                var createdAt = resultSet.getTimestamp("createdAt");
+                var createdAt = resultSet.getTimestamp("created_at");
                 var urlCheck = new UrlCheck(statusCode, title, h1, description);
                 urlCheck.setId(id);
                 urlCheck.setCreatedAt(createdAt);
@@ -52,7 +52,8 @@ public class UrlCheckRepository extends BaseRepository {
     }
 
     public static List<UrlCheck> findLatestForUrls(List<Integer> urlIds) throws SQLException {
-        var sql = "SELECT * FROM url_checks WHERE url_id = ANY (?) GROUP BY id HAVING max(created_at)";
+        var sql = "SELECT id, status_code, title, h1, description," +
+                "max(created_at) as created_at, url_id FROM url_checks WHERE url_id = ANY (?) GROUP BY id, url_id";
         try (var conn = dataSource.getConnection();
              var stmt = conn.prepareStatement(sql)) {
             stmt.setArray(1, conn.createArrayOf("int", urlIds.toArray()));
@@ -60,12 +61,12 @@ public class UrlCheckRepository extends BaseRepository {
             var result = new ArrayList<UrlCheck>();
             while (resultSet.next()) {
                 var id = resultSet.getInt("id");
-                var statusCode = resultSet.getInt("statusCode");
+                var statusCode = resultSet.getInt("status_code");
                 var title = resultSet.getString("title");
                 var h1 = resultSet.getString("h1");
                 var description = resultSet.getString("description");
-                var createdAt = resultSet.getTimestamp("createdAt");
-                var urlId = resultSet.getInt("urlId");
+                var createdAt = resultSet.getTimestamp("created_at");
+                var urlId = resultSet.getInt("url_id");
                 var urlCheck = new UrlCheck(statusCode, title, h1, description);
                 urlCheck.setId(id);
                 urlCheck.setCreatedAt(createdAt);
