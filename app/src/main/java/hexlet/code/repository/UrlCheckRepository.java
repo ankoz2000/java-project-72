@@ -52,8 +52,8 @@ public class UrlCheckRepository extends BaseRepository {
     }
 
     public static List<UrlCheck> findLatestForUrls(List<Integer> urlIds) throws SQLException {
-        var sql = "SELECT id, status_code, title, h1, description," +
-                "max(created_at) as created_at, url_id FROM url_checks WHERE url_id = ANY (?) GROUP BY id, url_id";
+        var sql = "SELECT id, status_code, title, h1, description,"
+                + "max(created_at) as created_at, url_id FROM url_checks WHERE url_id = ANY (?) GROUP BY id, url_id";
         try (var conn = dataSource.getConnection();
              var stmt = conn.prepareStatement(sql)) {
             stmt.setArray(1, conn.createArrayOf("int", urlIds.toArray()));
