@@ -103,9 +103,7 @@ public class App {
                 get("new", UrlController.newUrl);
                 path("{id}", () -> {
                     get(UrlController.showUrl);
-                });
-                path("{id}/checks", () -> {
-                    get(UrlController.checkUrl);
+                    path("checks", () -> post(UrlController.checkUrl));
                 });
             });
         });
