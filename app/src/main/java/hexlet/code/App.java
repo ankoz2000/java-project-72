@@ -90,7 +90,8 @@ public class App {
     }
 
     private static String getDatabaseUrl() {
-        return System.getenv().getOrDefault("JDBC_DATABASE_URL", "jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;DEFAULT_LOCK_TIMEOUT=10000;LOCK_MODE=0");
+        return System.getenv().getOrDefault("JDBC_DATABASE_URL",
+                "jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;DEFAULT_LOCK_TIMEOUT=10000;LOCK_MODE=0");
     }
 
     private static void addRoutes(Javalin app) {
