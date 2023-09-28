@@ -26,7 +26,7 @@
     </table>
   </div>
   <h3>Проверки</h3>
-  <form th:action="@{/urls/{id}/checks(id=*{url.getId()})}" method="get">
+  <form th:action="@{/urls/{id}/checks(id=*{url.getId()})}" method="post">
     <button type="submit" class="btn btn-outline-primary">Run check</button>
   </form>
   <table class="table table-striped mt-5">
