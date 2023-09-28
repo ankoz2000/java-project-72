@@ -2,8 +2,8 @@
 <html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layouts/application.html}">
 
-<section layout:fragment="header" th:object="${url}">
-  <h1 th:text="'Сайт ' + *{getName()}"></h1>
+<section layout:fragment="header">
+  <h1 th:text="'Сайт ' + ${#strings.abbreviate(url.getName(), 30)}"></h1>
 </section>
 
 <section layout:fragment="content">
@@ -16,7 +16,7 @@
       </tr>
       <tr>
         <td>Имя</td>
-        <td th:text="*{getName()}"></td>
+        <td th:text="*{#strings.abbreviate(getName(), 30)}"></td>
       </tr>
       <tr>
         <td>Дата создания</td>

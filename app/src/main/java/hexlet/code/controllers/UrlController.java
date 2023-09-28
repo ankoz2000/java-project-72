@@ -116,7 +116,7 @@ public class UrlController {
 
         Optional<Url> optionalUrl = UrlRepository.find(id);
 
-        if (!optionalUrl.isPresent()) {
+        if (optionalUrl.isEmpty()) {
             throw new NotFoundResponse();
         }
         Url url = optionalUrl.get();
@@ -164,7 +164,7 @@ public class UrlController {
             urlCheck.setH1(doc.selectFirst("h1").text());
         }
 
-        Element metaElement = doc.selectFirst("meta[name=content]");
+        Element metaElement = doc.selectFirst("meta[name=description]");
 
         if (metaElement != null) {
             LOG.info("Meta is: " + metaElement);
