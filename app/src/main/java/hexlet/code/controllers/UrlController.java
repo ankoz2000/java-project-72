@@ -112,7 +112,7 @@ public class UrlController {
     };
 
     public static Handler showUrl = ctx -> {
-        int id = ctx.pathParamAsClass("id", Integer.class).getOrDefault(null);
+        long id = ctx.pathParamAsClass("id", Long.class).getOrDefault(null);
 
         Optional<Url> optionalUrl = UrlRepository.find(id);
 
@@ -132,7 +132,7 @@ public class UrlController {
     };
 
     public static Handler checkUrl = ctx -> {
-        int id = ctx.pathParamAsClass("id", Integer.class).getOrDefault(null);
+        long id = ctx.pathParamAsClass("id", Long.class).getOrDefault(null);
 
         LOG.info("Add url check for url with id = " + id);
 

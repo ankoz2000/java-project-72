@@ -4,13 +4,13 @@ import java.sql.Timestamp;
 
 public final class UrlCheck {
 
-    private Integer id;
+    private Long id;
     private Integer statusCode;
     private String title;
     private String h1;
     private String description;
     private Timestamp createdAt;
-    private Integer urlId;
+    private Long urlId;
 
     public UrlCheck() {
     }
@@ -31,11 +31,11 @@ public final class UrlCheck {
         this.description = description;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -79,11 +79,11 @@ public final class UrlCheck {
         this.createdAt = createdAt;
     }
 
-    public Integer getUrlId() {
+    public Long getUrlId() {
         return urlId;
     }
 
-    public void setUrlId(Integer urlId) {
+    public void setUrlId(Long urlId) {
         this.urlId = urlId;
     }
 }

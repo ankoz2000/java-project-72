@@ -4,7 +4,7 @@ import java.sql.Timestamp;
 
 public final class Url {
 
-    private Integer id;
+    private Long id;
     private String name;
 
     private Timestamp createdAt;
@@ -20,11 +20,11 @@ public final class Url {
         name = "";
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
