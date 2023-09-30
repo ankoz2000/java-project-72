@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -73,20 +74,25 @@ public class UrlController {
         int rowsPerPage = 10;
 
         List<Url> urls = UrlRepository.getEntities();
-        List<UrlCheck> urlChecksLatest = UrlCheckRepository.findLatestForUrls(urls.stream()
-                .map(Url::getId)
-                .collect(Collectors.toList()));
+        List<UrlCheck> urlChecksLatest = new ArrayList<>();
+        if (!urls.isEmpty()) {
+            urlChecksLatest = UrlCheckRepository.findLatestForUrls(urls.stream()
+                    .map(Url::getId)
+                    .collect(Collectors.toList()));
+        }
 
         Map<Url, UrlCheck> result = new HashMap<>();
 
-        urlChecksLatest.forEach(uc -> {
-            urls.forEach(u -> {
-                if (u.getId().equals(uc.getUrlId())) {
-                    result.put(u, uc);
-                    u.setUrlCheck(uc);
-                }
+        if (!urlChecksLatest.isEmpty()) {
+            urlChecksLatest.forEach(uc -> {
+                urls.forEach(u -> {
+                    if (u.getId().equals(uc.getUrlId())) {
+                        result.put(u, uc);
+                        u.setUrlCheck(uc);
+                    }
+                });
             });
-        });
+        }
 
         int lastPage = urls.size() / 10 + 1;
         int currentPage = urls.size() / 10 + 1;
