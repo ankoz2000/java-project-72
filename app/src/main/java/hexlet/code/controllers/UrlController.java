@@ -183,6 +183,7 @@ public class UrlController {
         }
 
         urlCheck.setUrlId(url.getId());
+        urlCheck.setCreatedAt(new Timestamp(Calendar.getInstance().getTimeInMillis()));
         UrlCheckRepository.save(urlCheck);
 
         ctx.attribute("url", url);
