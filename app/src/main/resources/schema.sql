@@ -19,5 +19,3 @@ create table if not exists url_checks
     constraint pk_url_check primary key (id),
     constraint url_fk foreign key (url_id) references urls (id)
 );
-
-

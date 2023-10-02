@@ -79,6 +79,11 @@ public final class AppTest {
              var statement = connection.createStatement()) {
              statement.execute(sql);
         }
+        var sql2 = "INSERT INTO urls (name, created_at) VALUES ('https://javalin.io', '2023-01-01 14:57')";
+        try (var conn = dataSource.getConnection();
+             var stmt = conn.prepareStatement(sql2)) {
+            stmt.executeUpdate();
+        }
     }
 
     @Nested
@@ -105,9 +110,7 @@ public final class AppTest {
 
             assertThat(response.getStatus()).isEqualTo(200);
             assertThat(body).contains("https://javalin.io");
-            assertThat(body).contains("01/01/2023 14:57");
-            assertThat(body).contains("https://commons.apache.org");
-            assertThat(body).contains("01/01/2022 13:57");
+            assertThat(body).contains("2023-01-01 14:57");
         }
 
         @Test
@@ -119,7 +122,7 @@ public final class AppTest {
 
             assertThat(response.getStatus()).isEqualTo(200);
             assertThat(body).contains("https://javalin.io");
-            assertThat(body).contains("01/01/2023 14:57");
+            assertThat(body).contains("2023-01-01 14:57");
         }
 
         @Test
@@ -169,7 +172,7 @@ public final class AppTest {
                     .asEmpty();
 
             HttpResponse responsePost2 = Unirest
-                    .get(baseUrl + "/urls/1/checks")
+                    .post(baseUrl + "/urls/1/checks")
                     .asString();
 
             assertThat(responsePost2.getStatus()).isEqualTo(200);

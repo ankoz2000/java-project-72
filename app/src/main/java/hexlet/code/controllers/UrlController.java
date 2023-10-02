@@ -181,7 +181,7 @@ public class UrlController {
         urlCheck.setUrlId(url.getId());
         UrlCheckRepository.save(urlCheck);
 
-        ctx.attribute("urls", url);
+        ctx.attribute("url", url);
         ctx.attribute("urlCheck", urlCheck);
         ctx.sessionAttribute("flash", "Страница успешно проверена");
         ctx.sessionAttribute("flash-type", "success");
