@@ -18,11 +18,8 @@ import kong.unirest.Unirest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.ArrayList;
-import java.util.Optional;
+import java.sql.Timestamp;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -59,6 +56,7 @@ public class UrlController {
             ctx.sessionAttribute("flash-type", "info");
         } else {
             Url newUrl = new Url(normalizedUrl);
+            newUrl.setCreatedAt(Timestamp.valueOf((new Date()).toString()));
             UrlRepository.save(newUrl);
             LOG.info("Add url: " + normalizedUrl);
             ctx.sessionAttribute("flash", "Страница успешно добавлена");
