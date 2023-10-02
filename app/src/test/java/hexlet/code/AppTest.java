@@ -77,7 +77,7 @@ public final class AppTest {
 
         try (var connection = dataSource.getConnection();
              var statement = connection.createStatement()) {
-             statement.execute(sql);
+            statement.execute(sql);
         }
         var sql2 = "INSERT INTO urls (name, created_at) VALUES ('https://javalin.io', '2023-01-01 14:57')";
         try (var conn = dataSource.getConnection();
