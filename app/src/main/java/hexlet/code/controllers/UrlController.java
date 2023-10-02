@@ -56,7 +56,7 @@ public class UrlController {
             ctx.sessionAttribute("flash-type", "info");
         } else {
             Url newUrl = new Url(normalizedUrl);
-            newUrl.setCreatedAt(Timestamp.valueOf((new Date()).toString()));
+            newUrl.setCreatedAt(new Timestamp(Calendar.getInstance().getTimeInMillis()));
             UrlRepository.save(newUrl);
             LOG.info("Add url: " + normalizedUrl);
             ctx.sessionAttribute("flash", "Страница успешно добавлена");
