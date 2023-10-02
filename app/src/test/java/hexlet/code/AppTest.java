@@ -77,7 +77,7 @@ public final class AppTest {
 
         try (var connection = dataSource.getConnection();
              var statement = connection.createStatement()) {
-            statement.execute(sql);
+             statement.execute(sql);
         }
     }
 
@@ -169,7 +169,7 @@ public final class AppTest {
                     .asEmpty();
 
             HttpResponse responsePost2 = Unirest
-                    .get(baseUrl + "/urls/3/checks")
+                    .get(baseUrl + "/urls/1/checks")
                     .asString();
 
             assertThat(responsePost2.getStatus()).isEqualTo(200);
