@@ -153,14 +153,6 @@ public final class AppTest {
 
             assertThat(response.getStatus()).isEqualTo(200);
             assertThat(body).contains(inputUrlName);
-//            assertThat(body).contains("Страница успешно добавлена");
-
-//            Url actualUrl = new QUrl()
-//                    .name.equalTo(inputUrlName)
-//                    .findOne();
-//
-//            assertThat(actualUrl).isNotNull();
-//            assertThat(actualUrl.getName()).isEqualTo(inputUrlName);
         }
 
         @Test
