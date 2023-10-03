@@ -13,7 +13,7 @@ create table if not exists url_checks
     status_code integer,
     title varchar(255),
     h1 varchar(255),
-    description varchar(255),
+    description text,
     name       varchar(255),
     created_at timestamp default CURRENT_TIMESTAMP,
     url_id integer,
