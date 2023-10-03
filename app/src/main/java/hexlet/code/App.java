@@ -17,6 +17,8 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.stream.Collectors;
 
@@ -40,8 +42,9 @@ public class App {
         hikariConfig.setJdbcUrl(getDatabaseUrl());
 
         var dataSource = new HikariDataSource(hikariConfig);
+        Path pathToFile = Paths.get("schema.sql");
         var url = App.class.getClassLoader().getResource("schema.sql");
-        var file = new File(url.getFile());
+        var file = new File(pathToFile.toAbsolutePath().toString());
         var sql = Files.lines(file.toPath())
                 .collect(Collectors.joining("\n"));
 
