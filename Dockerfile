@@ -18,7 +18,6 @@ WORKDIR /app
 
 COPY /app .
 COPY app/src/main/resources .
-RUN ls -la .
 
 RUN gradle installDist
 
