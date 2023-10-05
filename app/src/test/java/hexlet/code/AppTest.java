@@ -65,20 +65,6 @@ public final class AppTest {
 
     @BeforeEach
     void beforeEach() throws IOException, SQLException {
-        var hikariConfig = new HikariConfig();
-        hikariConfig.setJdbcUrl(getDatabaseUrl());
-
-        dataSource = new HikariDataSource(hikariConfig);
-
-        var schema = AppTest.class.getClassLoader().getResource("schema.sql");
-        var file = new File(schema.getFile());
-        var sql = Files.lines(file.toPath())
-                .collect(Collectors.joining("\n"));
-
-        try (var connection = dataSource.getConnection();
-             var statement = connection.createStatement()) {
-            statement.execute(sql);
-        }
         var sql2 = "INSERT INTO urls (name, created_at) VALUES ('https://javalin.io', '2023-01-01 14:57')";
         try (var conn = dataSource.getConnection();
              var stmt = conn.prepareStatement(sql2)) {
