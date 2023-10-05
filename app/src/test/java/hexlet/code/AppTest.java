@@ -41,6 +41,9 @@ public final class AppTest {
     @BeforeAll
     public static void beforeAll() throws SQLException, IOException {
         app = App.getApp();
+        var hikariConfig = new HikariConfig();
+        hikariConfig.setJdbcUrl("jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;");
+        dataSource = new HikariDataSource(hikariConfig);
         app.start();
         int port = app.port();
         baseUrl = "http://localhost:" + port;
@@ -63,9 +66,6 @@ public final class AppTest {
 
     @BeforeEach
     void beforeEach() throws IOException, SQLException {
-        var hikariConfig = new HikariConfig();
-        hikariConfig.setJdbcUrl("jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;");
-        dataSource = new HikariDataSource(hikariConfig);
         var sql2 = "INSERT INTO urls (name, created_at) VALUES ('https://javalin.io', '2023-01-01 14:57')";
         try (var conn = dataSource.getConnection();
              var stmt = conn.prepareStatement(sql2)) {
