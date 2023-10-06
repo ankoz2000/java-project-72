@@ -55,11 +55,6 @@ public class App {
                 + "    description text,\n    created_at timestamp default CURRENT_TIMESTAMP,\n"
                 + "    url_id integer,\n"
                 + "    constraint url_fk foreign key (url_id) references urls (id)\n);\n";
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
-            sql = reader.lines().collect(Collectors.joining("\n"));
-        } catch (IOException e) {
-            System.out.println(e.getCause());
-        }
 
         try (var connection = dataSource.getConnection();
              var statement = connection.createStatement()) {
