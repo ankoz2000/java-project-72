@@ -6,3 +6,5 @@
 <a href="https://codeclimate.com/github/ankoz2000/java-project-72/test_coverage"><img src="https://api.codeclimate.com/v1/badges/dbda8c440cf159b9191d/test_coverage" /></a>
 
 Project on RENDER: https://page-analyzer-javalin.onrender.com
+
+Input url and start check. Program will check responce status, description and first header of page
