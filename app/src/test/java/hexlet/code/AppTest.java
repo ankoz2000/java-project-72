@@ -1,7 +1,6 @@
 package hexlet.code;
 
 import com.zaxxer.hikari.HikariDataSource;
-import hexlet.code.model.Url;
 import io.javalin.Javalin;
 import kong.unirest.HttpResponse;
 import kong.unirest.Unirest;
@@ -30,13 +29,8 @@ public final class AppTest {
 
     private static Javalin app;
     private static String baseUrl;
-    private static Url existingUrl;
     private HikariDataSource dataSource;
     private static MockWebServer server;
-
-    private static String getDatabaseUrl() {
-        return System.getenv().getOrDefault("JDBC_DATABASE_URL", "jdbc:h2:mem:project");
-    }
 
     @BeforeAll
     public static void beforeAll() throws SQLException, IOException {
