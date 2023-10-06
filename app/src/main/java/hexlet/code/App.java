@@ -14,9 +14,11 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
 import java.sql.SQLException;
 import java.util.stream.Collectors;
 
@@ -27,7 +29,7 @@ import static io.javalin.apibuilder.ApiBuilder.path;
 @Slf4j
 public class App {
 
-    public static Javalin getApp() throws IOException, SQLException {
+    public static Javalin getApp() throws SQLException {
         Javalin app = Javalin.create(config -> {
             if (!isProduction()) {
                 config.plugins.enableDevLogging();
