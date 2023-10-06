@@ -17,8 +17,6 @@ import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.util.stream.Collectors;
 
@@ -46,12 +44,11 @@ public class App {
         ClassLoader classLoader = App.class.getClassLoader();
         InputStream is = classLoader.getResourceAsStream("schema.sql");
         var url = App.class.getClassLoader().getResource("schema.sql");
-        var file = new File(url.getFile());
-        var sql = Files.lines(file.toPath())
-                .collect(Collectors.joining("\n"));
-
+        String sql = null;
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
             sql = reader.lines().collect(Collectors.joining("\n"));
+        } catch (IOException e) {
+            System.out.println(e.getCause());
         }
 
         try (var connection = dataSource.getConnection();
