@@ -43,7 +43,6 @@ public class App {
 
         ClassLoader classLoader = App.class.getClassLoader();
         InputStream is = classLoader.getResourceAsStream("schema.sql");
-        var url = App.class.getClassLoader().getResource("schema.sql");
         String sql = null;
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
             sql = reader.lines().collect(Collectors.joining("\n"));
