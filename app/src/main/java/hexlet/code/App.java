@@ -42,8 +42,6 @@ public class App {
         hikariConfig.setJdbcUrl(getDatabaseUrl());
 
         var dataSource = new HikariDataSource(hikariConfig);
-        System.out.println(dataSource.getJdbcUrl());
-        System.out.println(getMode());
 
         ClassLoader classLoader = App.class.getClassLoader();
         InputStream is = classLoader.getResourceAsStream("schema.sql");
