@@ -2,7 +2,6 @@ package hexlet.code;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import groovy.util.logging.Log;
 import groovy.util.logging.Slf4j;
 import hexlet.code.controllers.MainController;
 import hexlet.code.controllers.UrlController;
