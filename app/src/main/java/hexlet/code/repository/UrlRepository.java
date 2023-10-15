@@ -19,6 +19,7 @@ public class UrlRepository extends BaseRepository {
             var generatedKeys = preparedStatement.getGeneratedKeys();
             if (generatedKeys.next()) {
                 url.setId(generatedKeys.getLong(1));
+                System.out.println("Added url with id: " + url.getId());
             } else {
                 throw new SQLException("DB have not returned an id after saving an entity");
             }
