@@ -58,7 +58,7 @@ public final class AppTest {
     @BeforeEach
     void beforeEach() throws IOException, SQLException {
         var hikariConfig = new HikariConfig();
-        hikariConfig.setJdbcUrl("jdbc:h2:mem:project");
+        hikariConfig.setJdbcUrl("jdbc:h2:mem:project;DEFAULT_LOCK_TIMEOUT=10000;LOCK_MODE=0");
         dataSource = new HikariDataSource(hikariConfig);
         var sql2 = "INSERT INTO urls (name, created_at) VALUES ('https://javalin.io', '2023-01-01 14:57')";
         try (var conn = dataSource.getConnection();
