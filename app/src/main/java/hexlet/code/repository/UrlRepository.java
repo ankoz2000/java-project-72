@@ -10,7 +10,6 @@ import java.util.Optional;
 
 public class UrlRepository extends BaseRepository {
     public static void save(Url url) throws SQLException {
-        System.out.println("DATASOURCE: " + dataSource.getJdbcUrl());
         var sql = "INSERT INTO urls (name, created_at) VALUES (?, ?)";
         try (var conn = dataSource.getConnection();
              var preparedStatement = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -20,7 +19,6 @@ public class UrlRepository extends BaseRepository {
             var generatedKeys = preparedStatement.getGeneratedKeys();
             if (generatedKeys.next()) {
                 url.setId(generatedKeys.getLong(1));
-                System.out.println("Added url with id: " + url.getId());
             } else {
                 throw new SQLException("DB have not returned an id after saving an entity");
             }

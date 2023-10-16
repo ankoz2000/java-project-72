@@ -98,10 +98,10 @@ public class App {
 
     private static String getDatabaseUrl() {
         if (getMode().equals("development")) {
-            return "jdbc:h2:mem:project";
+            return "jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;DEFAULT_LOCK_TIMEOUT=10000;LOCK_MODE=0";
         } else {
             return System.getenv().getOrDefault("JDBC_DATABASE_URL",
-                    "jdbc:h2:mem:project");
+                    "jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;DEFAULT_LOCK_TIMEOUT=10000;LOCK_MODE=0");
         }
     }
 
