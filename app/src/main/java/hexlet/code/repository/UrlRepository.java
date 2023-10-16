@@ -1,12 +1,11 @@
 package hexlet.code.repository;
 
+import com.zaxxer.hikari.HikariDataSource;
 import hexlet.code.model.Url;
 
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class UrlRepository extends BaseRepository {
     public static void save(Url url) throws SQLException {
@@ -22,6 +21,26 @@ public class UrlRepository extends BaseRepository {
             } else {
                 throw new SQLException("DB have not returned an id after saving an entity");
             }
+        }
+        Map<String, Object> curl = getUrlByName(dataSource, url.getName());
+        System.out.println(curl.get("name"));
+    }
+
+    public static Map<String, Object> getUrlByName(HikariDataSource dataSource, String url) throws SQLException {
+        var result = new HashMap<String, Object>();
+        var sql = "SELECT * FROM urls WHERE name = ?";
+        try (var conn = dataSource.getConnection();
+             var stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, url);
+            var resultSet = stmt.executeQuery();
+
+            if (resultSet.next()) {
+                result.put("id", resultSet.getLong("id"));
+                result.put("name", resultSet.getString("name"));
+                return result;
+            }
+
+            return null;
         }
     }
 
