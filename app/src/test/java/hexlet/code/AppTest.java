@@ -60,7 +60,7 @@ public final class AppTest {
         var hikariConfig = new HikariConfig();
         hikariConfig.setJdbcUrl("jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;");
         dataSource = new HikariDataSource(hikariConfig);
-        var sql2 = "TRUNCATE TABLE urls; "
+        var sql2 = "TRUNCATE TABLE urls_checks; TRUNCATE TABLE urls;"
                 + "INSERT INTO urls (name, created_at) VALUES ('https://javalin.io', '2023-01-01 14:57')";
         try (var conn = dataSource.getConnection();
              var stmt = conn.prepareStatement(sql2)) {
